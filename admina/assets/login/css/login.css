@@ -1,0 +1,73 @@
+body {
+	background: #008299 url('../images/tukang.png');
+	margin:10% 0px; padding:0px;
+	text-align:center;
+	}
+	@font-face {
+	font-family: Architects;
+	src: url('../css/ArchitectsDaughter.ttf');
+		}
+	.login {
+		width:550px;
+		margin:auto auto;
+		text-align:left;
+		padding:15px;
+		height:210px;
+	box-shadow: inset 0 0 0 1px rgba(107, 107, 129, 0.92), 0 3px 9px rgba(0,0,0,0.64);
+		background: repeating-linear-gradient(45deg, rgba(25,40,55,0.75) 35%, rgba(65,85,100,0.75) 40%, rgba(65,85,100,0.75) 42%, rgba(25,40,55,0.75) 50%, rgba(25,40,55,0.75) 55%, rgba(70,85,100,0.75) 60%, rgba(70,85,100,0.75) 75%, rgba(25,40,55,0.75) 90%);
+		background-attachment: fixed;
+	}
+	.atas {
+		width:550px;
+		margin:auto auto;
+		text-align:left;
+		padding: 15px;
+		font:20px "Segoe UI",Arial,sans-serif;
+		color: #ffffff;
+		height:20px;
+		box-shadow: inset 0 0 0 1px rgba(34, 96, 140, 1), 0 3px 9px rgba(136, 101, 101, 1);
+		background: repeating-linear-gradient(45deg, rgba(25,40,55,0.75) 35%, rgba(65,85,100,0.75) 40%, rgba(65,85,100,0.75) 42%, rgba(25,40,55,0.75) 50%, rgba(25,40,55,0.75) 55%, rgba(70,85,100,0.75) 60%, rgba(70,85,100,0.75) 75%, rgba(25,40,55,0.75) 90%);
+		background-attachment: fixed;
+	}
+	.login #kanan {
+		float:left;
+		margin-left:10px;
+	}
+	.login #gam {
+		padding-top:20px;
+		float:left;
+		 width:174px;
+		 height:168px;
+	}
+	h3 {
+		font-size: 24px;
+		line-height: 40px;
+		color:white;
+		margin: 18px 0px;
+		font-family: inherit;
+		font-weight: bold;
+		line-height: 1;
+	}
+
+	.load {
+		display: none;
+		
+	}
+	.bad {
+		display:none;
+	color: orange;
+    font-family: "Georgia", sans-serif;	
+	}
+	.login .load {
+		
+		 margin-left:30px;
+		 margin-top:20px;
+		 float:right;
+	}
+	.txt {
+		 font-family: "Architects";
+		 font-size: 18px;
+		 color:#ffffff;
+		 margin-left:20px;
+		 position: relative;
+	}
