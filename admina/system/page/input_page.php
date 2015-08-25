@@ -49,7 +49,7 @@ if ($_POST['type_menu']=='main') {
 $modul_name = str_replace(" ", "_", strtolower($_POST['page_name']));
 //mkdir('../../modul/'.$modul_name);
 if (!is_dir('../../modul/'.$modul_name)) {
-	mkdir('../../modul/'.$modul_name);
+  mkdir('../../modul/'.$modul_name);
 }
 $main_table = $_POST['table'];
 $primary_key = $_POST['primary_key'];
@@ -73,105 +73,105 @@ $select_table='';
 if ($_POST['method_table']=='gallery') {
 $main_table = $_POST['album_table'];
 $primary_key = $_POST['album_primary'];
-	$input_gallery_action = '<?php
+  $input_gallery_action = '<?php
 include "../../inc/config.php";
 switch ($_GET["act"]) {
-	case "in"://add new album & upload foto
-	$data = array("'.$_POST['album_name'].'"=>$_POST["'.$_POST['album_name'].'"],"'.$_POST['deskripsi_album'].'"=>$_POST["'.$_POST['deskripsi_album'].'"]);
-		$in = $db->insert("'.$_POST['album_table'].'",$data);
-	$id_akhir=$db->get_last_id();
-	if (!is_dir("../../../upload/foto_'.$_POST['album_table'].'")) {
-	mkdir("../../../upload/foto_'.$_POST['album_table'].'");
-	}
-	for ($i=0; $i <count($_FILES["foto_banyak"]["name"]) ; $i++) { 
- 		 if (!preg_match("/.(jpg|png|jpeg|gif|bmp)$/i", $_FILES["foto_banyak"]["name"][$i]) ) {
-							echo "pastikan file yang anda pilih jpg|png|jpeg|gif|bmp";
-							exit();
-						} else {';
+  case "in"://add new album & upload foto
+  $data = array("'.$_POST['album_name'].'"=>$_POST["'.$_POST['album_name'].'"],"'.$_POST['deskripsi_album'].'"=>$_POST["'.$_POST['deskripsi_album'].'"]);
+    $in = $db->insert("'.$_POST['album_table'].'",$data);
+  $id_akhir=$db->get_last_id();
+  if (!is_dir("../../../upload/foto_'.$_POST['album_table'].'")) {
+  mkdir("../../../upload/foto_'.$_POST['album_table'].'");
+  }
+  for ($i=0; $i <count($_FILES["foto_banyak"]["name"]) ; $i++) { 
+     if (!preg_match("/.(jpg|png|jpeg|gif|bmp)$/i", $_FILES["foto_banyak"]["name"][$i]) ) {
+              echo "pastikan file yang anda pilih jpg|png|jpeg|gif|bmp";
+              exit();
+            } else {';
  if(isset($_POST["rename_foto"])=="on")
-		{
-			$input_gallery_action .='
+    {
+      $input_gallery_action .='
 $filename = $_FILES["foto_banyak"]["name"][$i];
 $filename = preg_replace("#[^a-z.0-9]#i", "", $filename); 
 $ex = explode(".", $filename); // split filename
 $fileExt = end($ex); // ekstensi akhir
  $filename = time().rand().".".$fileExt;//rename nama file';
-		} else { 
+    } else { 
 $input_gallery_action .='$filename = $_FILES["foto_banyak"]["name"][$i];';
-		}
+    }
 $input_gallery_action .='
 move_uploaded_file($_FILES["foto_banyak"]["tmp_name"][$i], "../../../upload/foto_'.$_POST['album_table'].'/".$filename);
 $db->insert("'.$_POST['foreign_album'].'",array("'.$_POST['foreign_album_nama'].'"=>$filename,"'.$_POST['foreign_album_id'].'"=>$id_akhir));
-						}
- 	}
-		if ($in=true) {
-			echo "good";
-		} else {
-			return false;
-		}
-		break; //delete album
-	case "hapus_album":
-		foreach ($db->fetch_custom("select * from '.$_POST['foreign_album'].' where '.$_POST['foreign_album_primary'].'=?",array("'.$_POST['foreign_album_primary'].'"=>$_GET["id"])) as $key) {
-			$db->deleteDirectory("../../../upload/foto_'.$_POST['album_table'].'/".$key->'.$_POST['foreign_album_nama'].');
-		}
-		$db->delete("'.$_POST['album_table'].'","'.$_POST['album_primary'].'",$_GET["id"]);
-		break;
-		//update desc foto
-	case "up_desc":
-		$up=$db->update("'.$_POST['foreign_album'].'",array("'.$_POST['foreign_album_desc'].'"=>$_POST["'.$_POST['foreign_album_desc'].'"]),"'.$_POST['foreign_album_primary'].'",$_POST["id"]);
-		if ($up=true) {
-			echo "good";
-		} else {
-			return false;
-		}
-		break;
-		//up album name & desc
-	case "up_name":
-		$data = array("'.$_POST['album_name'].'"=>$_POST["'.$_POST['album_name'].'"],"'.$_POST['deskripsi_album'].'"=>$_POST["'.$_POST['deskripsi_album'].'"],);
-		$up = $db->update("'.$_POST['album_table'].'",$data,"'.$_POST['album_primary'].'",$_POST["id"]);
-		if ($up=true) {
-			echo "good";
-		} else {
-			return false;
-		}
-		break;
-	//upload tambahan foto di album
-	case "up":
+            }
+  }
+    if ($in=true) {
+      echo "good";
+    } else {
+      return false;
+    }
+    break; //delete album
+  case "hapus_album":
+    foreach ($db->fetch_custom("select * from '.$_POST['foreign_album'].' where '.$_POST['foreign_album_primary'].'=?",array("'.$_POST['foreign_album_primary'].'"=>$_GET["id"])) as $key) {
+      $db->deleteDirectory("../../../upload/foto_'.$_POST['album_table'].'/".$key->'.$_POST['foreign_album_nama'].');
+    }
+    $db->delete("'.$_POST['album_table'].'","'.$_POST['album_primary'].'",$_GET["id"]);
+    break;
+    //update desc foto
+  case "up_desc":
+    $up=$db->update("'.$_POST['foreign_album'].'",array("'.$_POST['foreign_album_desc'].'"=>$_POST["'.$_POST['foreign_album_desc'].'"]),"'.$_POST['foreign_album_primary'].'",$_POST["id"]);
+    if ($up=true) {
+      echo "good";
+    } else {
+      return false;
+    }
+    break;
+    //up album name & desc
+  case "up_name":
+    $data = array("'.$_POST['album_name'].'"=>$_POST["'.$_POST['album_name'].'"],"'.$_POST['deskripsi_album'].'"=>$_POST["'.$_POST['deskripsi_album'].'"],);
+    $up = $db->update("'.$_POST['album_table'].'",$data,"'.$_POST['album_primary'].'",$_POST["id"]);
+    if ($up=true) {
+      echo "good";
+    } else {
+      return false;
+    }
+    break;
+  //upload tambahan foto di album
+  case "up":
 $images = array();
-	for ($i=0; $i <count($_FILES["foto_banyak"]["name"]) ; $i++) { 
- 		 if (!preg_match("/.(jpg|png|jpeg|gif|bmp)$/i", $_FILES["foto_banyak"]["name"][$i]) ) {
+  for ($i=0; $i <count($_FILES["foto_banyak"]["name"]) ; $i++) { 
+     if (!preg_match("/.(jpg|png|jpeg|gif|bmp)$/i", $_FILES["foto_banyak"]["name"][$i]) ) {
 $images = array("error"=>"pastikan file yang anda pilih jpg|png|jpeg|gif|bmp");
-						} else {';
+            } else {';
  if(isset($_POST["rename_foto"])=="on")
-		{
-			$input_gallery_action .='
+    {
+      $input_gallery_action .='
 $filename = $_FILES["foto_banyak"]["name"][$i];
 $filename = preg_replace("#[^a-z.0-9]#i", "", $filename); 
 $ex = explode(".", $filename); // split filename
 $fileExt = end($ex); // ekstensi akhir
  $filename = time().rand().".".$fileExt;//rename nama file';
-		} else { 
+    } else { 
 $input_gallery_action .='$filename = $_FILES["foto_banyak"]["name"][$i];';
-		}
-$input_gallery_action .='		
+    }
+$input_gallery_action .='   
 move_uploaded_file($_FILES["foto_banyak"]["tmp_name"][$i], "../../../upload/foto_'.$_POST['album_table'].'/".$filename);
 $db->insert("'.$_POST['foreign_album'].'",array("'.$_POST['foreign_album_nama'].'"=>$filename,"'.$_POST['foreign_album_id'].'"=>$_POST["id"]));
 $images[] = "../../../../upload/foto_'.$_POST['album_table'].'/".$filename;
-						}
- 	}
+            }
+  }
 ?>
 <script type="text/javascript">
   window.parent.Uploader.done(\'<?php echo json_encode($images); ?>\');
   </script>
 <?php
-		break;
+    break;
 case "hapus_foto":
-	$db->deleteDirectory("../../../upload/foto_'.$_POST['album_table'].'/".$db->fetch_single_row("'.$_POST['foreign_album'].'","'.$_POST['foreign_album_primary'].'",$_GET["id"])->'.$_POST['foreign_album_nama'].');
-		$db->delete("'.$_POST['foreign_album'].'","'.$_POST['foreign_album_primary'].'",$_GET["id"]);
-	break;
-	default:
-		# code...
-		break;
+  $db->deleteDirectory("../../../upload/foto_'.$_POST['album_table'].'/".$db->fetch_single_row("'.$_POST['foreign_album'].'","'.$_POST['foreign_album_primary'].'",$_GET["id"])->'.$_POST['foreign_album_nama'].');
+    $db->delete("'.$_POST['foreign_album'].'","'.$_POST['foreign_album_primary'].'",$_GET["id"]);
+  break;
+  default:
+    # code...
+    break;
 }
 ?>';
 
@@ -399,27 +399,27 @@ $fotos=$pg->myquery("select * from '.$_POST['foreign_album'].' where '.$_POST['f
 }
 
 elseif ($_POST['method_table']=='dtb_server') {
-	for ($i=0; $i <count($_POST['join_cond']) ; $i++) { 
-	$join.= " ".$_POST['join_cond'][$i]." join ".$_POST['join_with'][$i]." on ".$_POST['join_on_first'][$i]."=".$_POST['join_on_next'][$i];
-	}
+  for ($i=0; $i <count($_POST['join_cond']) ; $i++) { 
+  $join.= " ".$_POST['join_cond'][$i]." join ".$_POST['join_with'][$i]." on ".$_POST['join_on_first'][$i]."=".$_POST['join_on_next'][$i];
+  }
 } elseif ($_POST['method_table']=='dtb_manual') {
 
-	foreach ($_POST['dipilih1'] as $key => $value) {
+  foreach ($_POST['dipilih1'] as $key => $value) {
 
-	$col1 =implode(",", array_keys($_POST['dipilih1']));
+  $col1 =implode(",", array_keys($_POST['dipilih1']));
 
-	$exp_key=explode(".", $key);
-	$col .='<td><?=$isi->'.$exp_key[1].';?></td>'.PHP_EOL;
-	}
-	if (count($_POST['join_cond']>1)) {
-		for ($i=0; $i <count($_POST['join_cond']) ; $i++) { 
-			$join1.= " ".$_POST['join_cond'][$i]." join ".$_POST['join_with'][$i]." on ".$_POST['join_on_first'][$i]."=".$_POST['join_on_next'][$i];
-		}
-			$select_table = '<?php 
-			$dtb=$db->fetch_custom("select '.$col1.','.$main_table.'.'.$primary_key.' from '.$main_table.' '.$join1.'");
-			$i=1;
-			foreach ($dtb as $isi) {
-				?><tr id="line_<?=$isi->'.$primary_key.';?>">
+  $exp_key=explode(".", $key);
+  $col .='<td><?=$isi->'.$exp_key[1].';?></td>'.PHP_EOL;
+  }
+  if (count($_POST['join_cond']>1)) {
+    for ($i=0; $i <count($_POST['join_cond']) ; $i++) { 
+      $join1.= " ".$_POST['join_cond'][$i]." join ".$_POST['join_with'][$i]." on ".$_POST['join_on_first'][$i]."=".$_POST['join_on_next'][$i];
+    }
+      $select_table = '<?php 
+      $dtb=$db->fetch_custom("select '.$col1.','.$main_table.'.'.$primary_key.' from '.$main_table.' '.$join1.'");
+      $i=1;
+      foreach ($dtb as $isi) {
+        ?><tr id="line_<?=$isi->'.$primary_key.';?>">
         <td align="center"><?=$i;?></td>'.$col.'
         <td>
         <a href="<?=base_index();?>'.strtolower(str_replace(" ", "-", $_POST['page_name'])).'/detail/<?=$isi->'.$primary_key.';?>" class="btn btn-success btn-flat"><i class="fa fa-eye"></i></a> 
@@ -427,16 +427,16 @@ elseif ($_POST['method_table']=='dtb_server') {
         <?=($role_act["del_act"]=="Y")?\'<button class="btn btn-danger hapus btn-flat" data-uri="\'.base_admin().\'modul/'.strtolower(str_replace(" ", "_", $_POST['page_name'])).'/'.$modul_name.'_action.php" data-id="\'.$isi->'.$primary_key.'.\'"><i class="fa fa-trash-o"></i></button>\':"";?>
         </td>
         </tr>
-				<?php
-				$i++;
-			}
-			?>';
-	} else {
-			$select_table = '<?php 
-			$dtb=$db->fetch_custom("select '.$col1.' from '.$main_table.'");
-			$i=1;
-			foreach ($dtb as $isi) {
-				?><tr id="line_<?=$isi->'.$primary_key.';?>"><td align="center"><?=$i;?></td>
+        <?php
+        $i++;
+      }
+      ?>';
+  } else {
+      $select_table = '<?php 
+      $dtb=$db->fetch_custom("select '.$col1.' from '.$main_table.'");
+      $i=1;
+      foreach ($dtb as $isi) {
+        ?><tr id="line_<?=$isi->'.$primary_key.';?>"><td align="center"><?=$i;?></td>
         '.$col.';
         <td>
         <a href="<?=base_index();?>'.strtolower(str_replace(" ", "-", $_POST['page_name'])).'/detail/<?=$isi->'.$primary_key.';?>" class="btn btn-success btn-flat"><i class="fa fa-eye"></i></a>
@@ -444,14 +444,14 @@ elseif ($_POST['method_table']=='dtb_server') {
         <?=($role_act["del_act"]=="Y")?\'<button class="btn btn-danger hapus btn-flat" data-uri="\'.base_admin().\'modul/'.strtolower(str_replace(" ", "_", $_POST['page_name'])).'/'.$modul_name.'_action.php" data-id="\'.$isi->'.$primary_key.'.\'"><i class="fa fa-trash-o"></i></button>\':"";?>
         </td>
         </tr>
-				<?php
-			$i++;
-			}
-			?>';
-	}
+        <?php
+      $i++;
+      }
+      ?>';
+  }
 
 } elseif ($_POST['method_table']=='manual_pagination') {
-	foreach ($_POST['dipilih1'] as $key => $value) {
+  foreach ($_POST['dipilih1'] as $key => $value) {
 
   $col1 =implode(",", array_keys($_POST['dipilih1']));
 
@@ -564,7 +564,7 @@ $pg->url=base_index()."'.strtolower(str_replace(" ", "-", $_POST['page_name'])).
                                     </ul>
                                     </div>
                         </div>';
-  }	
+  } 
 }
 
 
@@ -572,79 +572,79 @@ $pg->url=base_index()."'.strtolower(str_replace(" ", "-", $_POST['page_name'])).
 //list table creation
 
 foreach ($_POST['dipilih1'] as $key => $value) {
-	$thead[$key]=$value;
-	$col_head .="'$key',";
+  $thead[$key]=$value;
+  $col_head .="'$key',";
 }
 
 //label list table 
 foreach ($_POST['label1'] as $key => $value) {
-	if (in_array($key, array_keys($thead)) ) {
-		$table_header .="<th>$value</th>".PHP_EOL."\t\t\t\t\t\t\t\t\t\t\t\t\t";
-	}
+  if (in_array($key, array_keys($thead)) ) {
+    $table_header .="<th>$value</th>".PHP_EOL."\t\t\t\t\t\t\t\t\t\t\t\t\t";
+  }
 }
 
 //checked berarti dibuath crud
 foreach ($_POST['dipilih'] as $key => $value) {
-	$pilih[$key]=$value;
+  $pilih[$key]=$value;
 }
 
 //for label, 
 foreach (array_filter($_POST['label']) as $key => $value) {
-	//check if sama dengan array yang ada di dipilih
-	if (in_array($key, array_keys($pilih)) ) {
-		$label[$key]=$value;
-	}
-		
-	
+  //check if sama dengan array yang ada di dipilih
+  if (in_array($key, array_keys($pilih)) ) {
+    $label[$key]=$value;
+  }
+    
+  
 }
 //required checkbox
 foreach ($_POST['required'] as $key => $value) {
-	if (in_array($key, array_keys($pilih)) ) {
-	$required[$key]=$value;
-	}
+  if (in_array($key, array_keys($pilih)) ) {
+  $required[$key]=$value;
+  }
 }
 //pilih type
 foreach ($_POST['type'] as $key => $value) {
-	if (in_array($key, array_keys($pilih)) ) {
-	$type[$key]=$value;
-	}
+  if (in_array($key, array_keys($pilih)) ) {
+  $type[$key]=$value;
+  }
 }
 
 //from 
 foreach ($_POST['from'] as $key => $value) {
-	$from[$key]=$value;
+  $from[$key]=$value;
 }
 
 //on value 
 foreach ($_POST['on_value'] as $key => $value) {
-	$on_value[$key]=$value;
+  $on_value[$key]=$value;
 }
 //on name 
 foreach ($_POST['on_name'] as $key => $value) {
-	$on_name[$key]=$value;
+  $on_name[$key]=$value;
 }
 //allowed upload file
 
 foreach ($_POST['alowed'] as $key => $value) {
-	$allowed[$key]=$value;
+  $allowed[$key]=$value;
 }
 
 //witdh upload image resize
 foreach ($_POST['width'] as $key => $value) {
-	$width[$key]=$value;
+  $width[$key]=$value;
 }
 //heigh upload image resize
 foreach ($_POST['height'] as $key => $value) {
-	$height[$key]=$value;
+  $height[$key]=$value;
 }
 
 //boolean yes value 
 foreach ($_POST['yes_val'] as $key => $value) {
-	$yes_val[$key]=$value;
+  $yes_val[$key]=$value;
 }
 //boolean no value
 foreach ($_POST['no_val'] as $key => $value) {
-	$no_val[$key]=$value;
+  $no_val[$key]=$value;
 }
 
 $tes = array_merge_recursive($pilih,$label,$type,$required,$from,$on_value,$on_name,$allowed,$width,$height,$yes_val,$no_val);
@@ -652,131 +652,131 @@ $tes = array_merge_recursive($pilih,$label,$type,$required,$from,$on_value,$on_n
 $i=1;
 foreach ($tes as $key => $value) {
 
-	if ($value[3]=='on') {
-		$required="required";
-	} else {
-		$required='';
-	}
+  if ($value[3]=='on') {
+    $required="required";
+  } else {
+    $required='';
+  }
 
-	if ($value[2]=='text') {
-		$input='<input type="text" name="'.$key.'" placeholder="'.$value[1].'" class="form-control" '.$required.'> ';
-		$update='<input type="text" name="'.$key.'" value="<?=$data_edit->'.$key.';?>" class="form-control" '.$required.'> ';
-		$detail='<input type="text" disabled="" value="<?=$data_edit->'.$key.';?>" class="form-control">';
-		
-		$input_action = '"'.$key.'"=>$_POST["'.$key.'"],';
-		$update_action = '"'.$key.'"=>$_POST["'.$key.'"],';
-	}elseif ($value[2]=='email') {
-	$input='<input type="text" data-rule-email="true" name="'.$key.'" placeholder="'.$value[1].'" class="form-control" '.$required.'> ';
-		$update='<input type="text"  data-rule-email="true" name="'.$key.'" value="<?=$data_edit->'.$key.';?>" class="form-control" '.$required.'> ';
-		$detail='<input type="text" disabled="" value="<?=$data_edit->'.$key.';?>" class="form-control">';
-		$input_action = '"'.$key.'"=>$_POST["'.$key.'"],';
-		$update_action = '"'.$key.'"=>$_POST["'.$key.'"],';
-	} elseif ($value[2]=='textarea') {
-		$input ='<textarea id="editbox" name="'.$key.'" class="editbox"></textarea>';
-		$update='<textarea id="editbox" name="'.$key.'" class="editbox"'.$required.'><?=$data_edit->'.$key.';?> </textarea>';
-		$detail='<textarea id="editbox" name="'.$key.'" disabled="" class="editbox"'.$required.'><?=$data_edit->'.$key.';?> </textarea>';
-		$input_action = '"'.$key.'"=>$_POST["'.$key.'"],';
-		$update_action = '"'.$key.'"=>$_POST["'.$key.'"],';
-	} elseif ($value[2]=='number') {
-		$input='<input type="text" data-rule-number="true" name="'.$key.'" placeholder="'.$value[1].'" class="form-control" '.$required.'> ';
-		$update='<input type="text" data-rule-number="true" name="'.$key.'" value="<?=$data_edit->'.$key.';?>" class="form-control" '.$required.'> ';
-		$detail='<input type="text" disabled="" value="<?=$data_edit->'.$key.';?>" class="form-control">';
-		$input_action = '"'.$key.'"=>$_POST["'.$key.'"],';
-		$update_action = '"'.$key.'"=>$_POST["'.$key.'"],';
-	}elseif ($value[2]=='date') {
-		$detail='<input type="text" disabled="" value="<?=tgl_indo($data_edit->'.$key.');?>" class="form-control">';
-		$input='<input type="text" id="tgl'.$i.'" data-rule-date="true" name="'.$key.'" placeholder="'.$value[1].'" class="form-control" '.$required.'> ';
-		$update='<input type="text" id="tgl'.$i.'" data-rule-date="true" name="'.$key.'" value="<?=$data_edit->'.$key.';?>" class="form-control" '.$required.'> ';
-		$i++;
-		$input_action = '"'.$key.'"=>$_POST["'.$key.'"],';
-		$update_action = '"'.$key.'"=>$_POST["'.$key.'"],';
-	} elseif ($value[2]=='boolean') {
-		$input = '<input name="'.$key.'" class="make-switch" type="checkbox" checked>';
-		if ($value[3]=='on') {
-			$isi_yes=$value[4];
-			$isi_no = $value[5];
-		} else {
-			$isi_yes=$value[3];
-			$isi_no = $value[4];
-		}
-		$if_boolean.= 'if(isset($_POST["'.$key.'"])=="on")
-		{
-			$'.$key.' = array("'.$key.'"=>"'.$isi_yes.'");
-			$data=array_merge($data,$'.$key.');
-		} else { 
-			$'.$key.' = array("'.$key.'"=>"'.$isi_no.'");
-			$data=array_merge($data,$'.$key.');
-		}';
+  if ($value[2]=='text') {
+    $input='<input type="text" name="'.$key.'" placeholder="'.$value[1].'" class="form-control" '.$required.'> ';
+    $update='<input type="text" name="'.$key.'" value="<?=$data_edit->'.$key.';?>" class="form-control" '.$required.'> ';
+    $detail='<input type="text" disabled="" value="<?=$data_edit->'.$key.';?>" class="form-control">';
+    
+    $input_action = '"'.$key.'"=>$_POST["'.$key.'"],';
+    $update_action = '"'.$key.'"=>$_POST["'.$key.'"],';
+  }elseif ($value[2]=='email') {
+  $input='<input type="text" data-rule-email="true" name="'.$key.'" placeholder="'.$value[1].'" class="form-control" '.$required.'> ';
+    $update='<input type="text"  data-rule-email="true" name="'.$key.'" value="<?=$data_edit->'.$key.';?>" class="form-control" '.$required.'> ';
+    $detail='<input type="text" disabled="" value="<?=$data_edit->'.$key.';?>" class="form-control">';
+    $input_action = '"'.$key.'"=>$_POST["'.$key.'"],';
+    $update_action = '"'.$key.'"=>$_POST["'.$key.'"],';
+  } elseif ($value[2]=='textarea') {
+    $input ='<textarea id="editbox" name="'.$key.'" class="editbox"></textarea>';
+    $update='<textarea id="editbox" name="'.$key.'" class="editbox"'.$required.'><?=$data_edit->'.$key.';?> </textarea>';
+    $detail='<textarea id="editbox" name="'.$key.'" disabled="" class="editbox"'.$required.'><?=$data_edit->'.$key.';?> </textarea>';
+    $input_action = '"'.$key.'"=>$_POST["'.$key.'"],';
+    $update_action = '"'.$key.'"=>$_POST["'.$key.'"],';
+  } elseif ($value[2]=='number') {
+    $input='<input type="text" data-rule-number="true" name="'.$key.'" placeholder="'.$value[1].'" class="form-control" '.$required.'> ';
+    $update='<input type="text" data-rule-number="true" name="'.$key.'" value="<?=$data_edit->'.$key.';?>" class="form-control" '.$required.'> ';
+    $detail='<input type="text" disabled="" value="<?=$data_edit->'.$key.';?>" class="form-control">';
+    $input_action = '"'.$key.'"=>$_POST["'.$key.'"],';
+    $update_action = '"'.$key.'"=>$_POST["'.$key.'"],';
+  }elseif ($value[2]=='date') {
+    $detail='<input type="text" disabled="" value="<?=tgl_indo($data_edit->'.$key.');?>" class="form-control">';
+    $input='<input type="text" id="tgl'.$i.'" data-rule-date="true" name="'.$key.'" placeholder="'.$value[1].'" class="form-control" '.$required.'> ';
+    $update='<input type="text" id="tgl'.$i.'" data-rule-date="true" name="'.$key.'" value="<?=$data_edit->'.$key.';?>" class="form-control" '.$required.'> ';
+    $i++;
+    $input_action = '"'.$key.'"=>$_POST["'.$key.'"],';
+    $update_action = '"'.$key.'"=>$_POST["'.$key.'"],';
+  } elseif ($value[2]=='boolean') {
+    $input = '<input name="'.$key.'" class="make-switch" type="checkbox" checked>';
+    if ($value[3]=='on') {
+      $isi_yes=$value[4];
+      $isi_no = $value[5];
+    } else {
+      $isi_yes=$value[3];
+      $isi_no = $value[4];
+    }
+    $if_boolean.= 'if(isset($_POST["'.$key.'"])=="on")
+    {
+      $'.$key.' = array("'.$key.'"=>"'.$isi_yes.'");
+      $data=array_merge($data,$'.$key.');
+    } else { 
+      $'.$key.' = array("'.$key.'"=>"'.$isi_no.'");
+      $data=array_merge($data,$'.$key.');
+    }';
 
-		$update = '<?php if ($data_edit->'.$key.'=="'.$isi_yes.'") {
-			?>
-			<input name="'.$key.'" class="make-switch" type="checkbox" checked>
-			<?php
-		} else {
-			?>
-			<input name="'.$key.'" class="make-switch" type="checkbox">
-			<?php
-		}?>';
-		$detail='<?php if ($data_edit->'.$key.'=="'.$isi_yes.'") {
-			?>
-			<input name="'.$key.'" class="make-switch" disabled type="checkbox" checked>
-			<?php
-		} else {
-			?>
-			<input name="'.$key.'" class="make-switch" disabled type="checkbox">
-			<?php
-		}?>';
-		$input_action = '';
+    $update = '<?php if ($data_edit->'.$key.'=="'.$isi_yes.'") {
+      ?>
+      <input name="'.$key.'" class="make-switch" type="checkbox" checked>
+      <?php
+    } else {
+      ?>
+      <input name="'.$key.'" class="make-switch" type="checkbox">
+      <?php
+    }?>';
+    $detail='<?php if ($data_edit->'.$key.'=="'.$isi_yes.'") {
+      ?>
+      <input name="'.$key.'" class="make-switch" disabled type="checkbox" checked>
+      <?php
+    } else {
+      ?>
+      <input name="'.$key.'" class="make-switch" disabled type="checkbox">
+      <?php
+    }?>';
+    $input_action = '';
              $update_action = '';
 
-	}
-	elseif ($value[2]=='select')
-	{
-		if ($value[3]=='on') {
-			$val = explode('.', $value[5]);
-			$val_name = explode('.', $value[6]);
-			$from_table=$value[4];
-		} else {
-			$val = explode('.', $value[4]);
-			$val_name = explode('.', $value[5]);
-			$from_table=$value[3];
-		}
+  }
+  elseif ($value[2]=='select')
+  {
+    if ($value[3]=='on') {
+      $val = explode('.', $value[5]);
+      $val_name = explode('.', $value[6]);
+      $from_table=$value[4];
+    } else {
+      $val = explode('.', $value[4]);
+      $val_name = explode('.', $value[5]);
+      $from_table=$value[3];
+    }
 
-		$input ='<select name="'.$key.'" data-placeholder="Pilih '.$value[1].' ..." class="form-control chzn-select" tabindex="2" '.$required.'>
+    $input ='<select name="'.$key.'" data-placeholder="Pilih '.$value[1].' ..." class="form-control chzn-select" tabindex="2" '.$required.'>
                <option value=""></option>
                <?php foreach ($db->fetch_all("'.$from_table.'") as $isi) {
-               		echo "<option value=\'$isi->'.$val[1].'\'>$isi->'.$val_name[1].'</option>";
+                  echo "<option value=\'$isi->'.$val[1].'\'>$isi->'.$val_name[1].'</option>";
                } ?>
               </select>';
         $update = '<select name="'.$key.'" data-placeholder="Pilih '.$value[1].'..." class="form-control chzn-select" tabindex="2" '.$required.'>
                <option value=""></option>
                <?php foreach ($db->fetch_all("'.$from_table.'") as $isi) {
 
-               		if ($data_edit->'.$key.'==$isi->'.$val[1].') {
-               			echo "<option value=\'$isi->'.$val[1].'\' selected>$isi->'.$val_name[1].'</option>";
-               		} else {
-               		echo "<option value=\'$isi->'.$val[1].'\'>$isi->'.$val_name[1].'</option>";
-               			}
+                  if ($data_edit->'.$key.'==$isi->'.$val[1].') {
+                    echo "<option value=\'$isi->'.$val[1].'\' selected>$isi->'.$val_name[1].'</option>";
+                  } else {
+                  echo "<option value=\'$isi->'.$val[1].'\'>$isi->'.$val_name[1].'</option>";
+                    }
                } ?>
               </select>';
         $detail='<?php foreach ($db->fetch_all("'.$from_table.'") as $isi) {
-               		if ($data_edit->'.$key.'==$isi->'.$val[1].') {
+                  if ($data_edit->'.$key.'==$isi->'.$val[1].') {
 
-               			echo "<input disabled class=\'form-control\' type=\'text\' value=\'$isi->'.$val_name[1].'\'>";
-               		}
+                    echo "<input disabled class=\'form-control\' type=\'text\' value=\'$isi->'.$val_name[1].'\'>";
+                  }
                } ?>
               ';
              $input_action = '"'.$key.'"=>$_POST["'.$key.'"],';
              $update_action = '"'.$key.'"=>$_POST["'.$key.'"],';
-	} //upload file 
-	elseif($value[2]=='ufile')
-	{
-		if ($value[3]=='on') {
-			$tipe_alow=$value[4];
-		} else {
-			$tipe_alow=$value[3];
-		}
-		$input = '<div class="fileinput fileinput-new" data-provides="fileinput">
+  } //upload file 
+  elseif($value[2]=='ufile')
+  {
+    if ($value[3]=='on') {
+      $tipe_alow=$value[4];
+    } else {
+      $tipe_alow=$value[3];
+    }
+    $input = '<div class="fileinput fileinput-new" data-provides="fileinput">
                             <div class="input-group">
                               <div class="form-control uneditable-input span3" data-trigger="fileinput">
                                 <i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span> 
@@ -788,9 +788,9 @@ foreach ($tes as $key => $value) {
                             </div>
                           </div>';
                           $if_input_file = 'if (!is_dir("../../../upload/'.$modul_name.'")) {
-							mkdir("../../../upload/'.$modul_name.'");
-						}';
-		$update = '<div class="fileinput fileinput-new" data-provides="fileinput">
+              mkdir("../../../upload/'.$modul_name.'");
+            }';
+    $update = '<div class="fileinput fileinput-new" data-provides="fileinput">
                             <div class="input-group">
                               <div class="form-control uneditable-input span3" data-trigger="fileinput">
                                 <i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename"></span> 
@@ -807,27 +807,27 @@ foreach ($tes as $key => $value) {
                           $for_file_in .= '
                     if (!preg_match("/.('.$tipe_alow.')$/i", $_FILES["'.$key.'"]["name"]) ) {
 
-							echo "pastikan file yang anda pilih '.$tipe_alow.'";
-							exit();
+              echo "pastikan file yang anda pilih '.$tipe_alow.'";
+              exit();
 
-						} else {
-							move_uploaded_file($_FILES["'.$key.'"]["tmp_name"], "../../../upload/'.$modul_name.'/".$_FILES[\''.$key.'\'][\'name\']);
-							$'.$key.' = array("'.$key.'"=>$_FILES["'.$key.'"]["name"]);
-							$data = array_merge($data,$'.$key.');
-						}';
+            } else {
+              move_uploaded_file($_FILES["'.$key.'"]["tmp_name"], "../../../upload/'.$modul_name.'/".$_FILES[\''.$key.'\'][\'name\']);
+              $'.$key.' = array("'.$key.'"=>$_FILES["'.$key.'"]["name"]);
+              $data = array_merge($data,$'.$key.');
+            }';
                          $for_file .= '
                          if(isset($_FILES["'.$key.'"]["name"])) {
                         if (!preg_match("/.('.$tipe_alow.')$/i", $_FILES["'.$key.'"]["name"]) ) {
 
-							echo "pastikan file yang anda pilih '.$tipe_alow.'";
-							exit();
+              echo "pastikan file yang anda pilih '.$tipe_alow.'";
+              exit();
 
-						} else {
-							move_uploaded_file($_FILES["'.$key.'"]["tmp_name"], "../../../upload/'.$modul_name.'/".$_FILES[\''.$key.'\'][\'name\']);
-							$db->deleteDirectory("../../../upload/'.$modul_name.'/".$db->fetch_single_row("'.$main_table.'","'.$primary_key.'",$_POST["id"])->'.$key.');
-							$'.$key.' = array("'.$key.'"=>$_FILES["'.$key.'"]["name"]);
-							$data = array_merge($data,$'.$key.');
-						}
+            } else {
+              move_uploaded_file($_FILES["'.$key.'"]["tmp_name"], "../../../upload/'.$modul_name.'/".$_FILES[\''.$key.'\'][\'name\']);
+              $db->deleteDirectory("../../../upload/'.$modul_name.'/".$db->fetch_single_row("'.$main_table.'","'.$primary_key.'",$_POST["id"])->'.$key.');
+              $'.$key.' = array("'.$key.'"=>$_FILES["'.$key.'"]["name"]);
+              $data = array_merge($data,$'.$key.');
+            }
 
                          }';
 //delete image action
@@ -836,19 +836,19 @@ $for_file_delete = '$db->deleteDirectory("../../../upload/'.$modul_name.'/".$db-
         $detail='<input type="text" disabled="" value="<?=$data_edit->'.$key.';?>" class="form-control">';
                           $input_action = '';
              $update_action = '';
-	} elseif ($value[2]=='uimager') {
-		if ($value[3]=='on') {
-			$height_crop=$value[4];
-			$width_crop=$value[5];
-		} else {
-			$height_crop=$value[3];
-			$width_crop=$value[4];
-		}
-		$detail='<div class="fileinput fileinput-new" data-provides="fileinput">
+  } elseif ($value[2]=='uimager') {
+    if ($value[3]=='on') {
+      $height_crop=$value[4];
+      $width_crop=$value[5];
+    } else {
+      $height_crop=$value[3];
+      $width_crop=$value[4];
+    }
+    $detail='<div class="fileinput fileinput-new" data-provides="fileinput">
                     <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;">
                     <img src="../../../../upload/'.$modul_name.'/<?=$data_edit->'.$key.'?>"></div>
                   </div>';
-		        $input = '<div class="fileinput fileinput-new" data-provides="fileinput">
+            $input = '<div class="fileinput fileinput-new" data-provides="fileinput">
                             <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
                               <img data-src="holder.js/100%x100%" alt="...">
                             </div>
@@ -861,37 +861,37 @@ $for_file_delete = '$db->deleteDirectory("../../../upload/'.$modul_name.'/".$db-
                             </div>
                           </div>';
           $if_input_uimager = 'if (!is_dir("../../../upload/'.$modul_name.'")) {
-							mkdir("../../../upload/'.$modul_name.'");
-						}';
-		    $for_uimager_in .= '
+              mkdir("../../../upload/'.$modul_name.'");
+            }';
+        $for_uimager_in .= '
                     if (!preg_match("/.(png|jpg|jpeg|gif|bmp)$/i", $_FILES["'.$key.'"]["name"]) ) {
 
-							echo "pastikan file yang anda pilih png|jpg|jpeg|gif";
-							exit();
+              echo "pastikan file yang anda pilih png|jpg|jpeg|gif";
+              exit();
 
-						} else {
+            } else {
 $db->compressImage($_FILES["'.$key.'"]["type"],$_FILES["'.$key.'"]["tmp_name"],"../../../upload/'.$modul_name.'/",$_FILES["'.$key.'"]["name"],'.$height_crop.','.$width_crop.');
-						$'.$key.' = array("'.$key.'"=>$_FILES["'.$key.'"]["name"]);
-							$data = array_merge($data,$'.$key.');
-						}';
+            $'.$key.' = array("'.$key.'"=>$_FILES["'.$key.'"]["name"]);
+              $data = array_merge($data,$'.$key.');
+            }';
 
    $for_uimager .= '
                          if(isset($_FILES["'.$key.'"]["name"])) {
                         if (!preg_match("/.(png|jpg|jpeg|gif|bmp)$/i", $_FILES["'.$key.'"]["name"]) ) {
 
-							echo "pastikan file yang anda pilih gambar";
-							exit();
+              echo "pastikan file yang anda pilih gambar";
+              exit();
 
-						} else {
+            } else {
 $db->compressImage($_FILES["'.$key.'"]["type"],$_FILES["'.$key.'"]["tmp_name"],"../../../upload/'.$modul_name.'/",$_FILES["'.$key.'"]["name"],'.$height_crop.','.$width_crop.');
-							$db->deleteDirectory("../../../upload/'.$modul_name.'/".$db->fetch_single_row("'.$main_table.'","'.$primary_key.'",$_POST["id"])->'.$key.');
-							$'.$key.' = array("'.$key.'"=>$_FILES["'.$key.'"]["name"]);
-							$data = array_merge($data,$'.$key.');
-						}
+              $db->deleteDirectory("../../../upload/'.$modul_name.'/".$db->fetch_single_row("'.$main_table.'","'.$primary_key.'",$_POST["id"])->'.$key.');
+              $'.$key.' = array("'.$key.'"=>$_FILES["'.$key.'"]["name"]);
+              $data = array_merge($data,$'.$key.');
+            }
 
                          }';
    $for_uimager_delete .= '
-		$db->deleteDirectory("../../../upload/'.$modul_name.'/".$db->fetch_single_row("'.$main_table.'","'.$primary_key.'",$_POST["id"])->'.$key.');';
+    $db->deleteDirectory("../../../upload/'.$modul_name.'/".$db->fetch_single_row("'.$main_table.'","'.$primary_key.'",$_POST["id"])->'.$key.');';
 
 $update = '<div class="fileinput fileinput-new" data-provides="fileinput">
                             <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
@@ -907,9 +907,9 @@ $update = '<div class="fileinput fileinput-new" data-provides="fileinput">
                           </div>';
                        $input_action = '';
              $update_action = '';
-		
-	}elseif ($value[2]=='uimagef') {
-		$detail='<div class="fileinput fileinput-new" data-provides="fileinput">
+    
+  }elseif ($value[2]=='uimagef') {
+    $detail='<div class="fileinput fileinput-new" data-provides="fileinput">
                     <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;">
                     <img src="../../../../upload/'.$modul_name.'/<?=$data_edit->'.$key.'?>"></div>
                   </div>';
@@ -926,39 +926,39 @@ $update = '<div class="fileinput fileinput-new" data-provides="fileinput">
                             </div>
                           </div>';
           $if_input_uimagef = 'if (!is_dir("../../../upload/'.$modul_name.'")) {
-							mkdir("../../../upload/'.$modul_name.'");
-						}';
-		    $for_uimagef_in .= '
+              mkdir("../../../upload/'.$modul_name.'");
+            }';
+        $for_uimagef_in .= '
                     if (!preg_match("/.(png|jpg|jpeg|gif|bmp)$/i", $_FILES["'.$key.'"]["name"]) ) {
 
-							echo "pastikan file yang anda pilih png|jpg|jpeg|gif";
-							exit();
+              echo "pastikan file yang anda pilih png|jpg|jpeg|gif";
+              exit();
 
-						} else { 
-			move_uploaded_file($_FILES["'.$key.'"]["tmp_name"], "../../../upload/'.$modul_name.'/".$_FILES[\''.$key.'\'][\'name\']);
-				
-						$'.$key.' = array("'.$key.'"=>$_FILES["'.$key.'"]["name"]);
-							$data = array_merge($data,$'.$key.');
-						}';
+            } else { 
+      move_uploaded_file($_FILES["'.$key.'"]["tmp_name"], "../../../upload/'.$modul_name.'/".$_FILES[\''.$key.'\'][\'name\']);
+        
+            $'.$key.' = array("'.$key.'"=>$_FILES["'.$key.'"]["name"]);
+              $data = array_merge($data,$'.$key.');
+            }';
 
    $for_uimagef .= '
                          if(isset($_FILES["'.$key.'"]["name"])) {
                         if (!preg_match("/.(png|jpg|jpeg|gif|bmp)$/i", $_FILES["'.$key.'"]["name"]) ) {
 
-							echo "pastikan file yang anda pilih gambar";
-							exit();
+              echo "pastikan file yang anda pilih gambar";
+              exit();
 
-						} else {
-			move_uploaded_file($_FILES["'.$key.'"]["tmp_name"], "../../../upload/'.$modul_name.'/".$_FILES[\''.$key.'\'][\'name\']);
-				
-							$db->deleteDirectory("../../../upload/'.$modul_name.'/".$db->fetch_single_row("'.$main_table.'","'.$primary_key.'",$_POST["id"])->'.$key.');
-							$'.$key.' = array("'.$key.'"=>$_FILES["'.$key.'"]["name"]);
-							$data = array_merge($data,$'.$key.');
-						}
+            } else {
+      move_uploaded_file($_FILES["'.$key.'"]["tmp_name"], "../../../upload/'.$modul_name.'/".$_FILES[\''.$key.'\'][\'name\']);
+        
+              $db->deleteDirectory("../../../upload/'.$modul_name.'/".$db->fetch_single_row("'.$main_table.'","'.$primary_key.'",$_POST["id"])->'.$key.');
+              $'.$key.' = array("'.$key.'"=>$_FILES["'.$key.'"]["name"]);
+              $data = array_merge($data,$'.$key.');
+            }
 
                          }';
    $for_uimagef_delete .= '
-		$db->deleteDirectory("../../../upload/'.$modul_name.'/".$db->fetch_single_row("'.$main_table.'","'.$primary_key.'",$_POST["id"])->'.$key.');';
+    $db->deleteDirectory("../../../upload/'.$modul_name.'/".$db->fetch_single_row("'.$main_table.'","'.$primary_key.'",$_POST["id"])->'.$key.');';
 
         $update = '<div class="fileinput fileinput-new" data-provides="fileinput">
                             <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
@@ -974,8 +974,8 @@ $update = '<div class="fileinput fileinput-new" data-provides="fileinput">
                           </div>';
                        $input_action = '';
              $update_action = '';
-		
-	}
+    
+  }
 
 $input_element .= '<div class="form-group">
                         <label for="'.$value[1].'" class="control-label col-lg-2">'.$value[1].'</label>
@@ -998,7 +998,7 @@ $detail_element .= '<div class="form-group">
 
 $for_input_action .= $input_action;
 $for_update_action .=$update_action;
-		
+    
 }
 
 include "template.php";
@@ -1020,7 +1020,7 @@ $db->buat_file('../../modul/'.$modul_name.'/'.$modul_name.'_edit.php',$modul_edi
 $db->buat_file('../../modul/'.$modul_name.'/'.$modul_name.'_detail.php',$modul_detail);
 
 } elseif($_POST['method_table']=='dtb_manual') {
-	//write list table 
+  //write list table 
 $db->buat_file('../../modul/'.$modul_name.'/'.$modul_name.'_view.php',$list_table_off);
 //write modul action 
 $db->buat_file('../../modul/'.$modul_name.'/'.$modul_name.'_action.php',$modul_action);
@@ -1030,17 +1030,17 @@ $db->buat_file('../../modul/'.$modul_name.'/'.$modul_name.'_edit.php',$modul_edi
 $db->buat_file('../../modul/'.$modul_name.'/'.$modul_name.'_detail.php',$modul_detail);
 
 } elseif($_POST['method_table']=='manual_pagination') {
-		//write list table 
-	$db->buat_file('../../modul/'.$modul_name.'/'.$modul_name.'_view.php',$list_table_manual);
-	//write modul action 
+    //write list table 
+  $db->buat_file('../../modul/'.$modul_name.'/'.$modul_name.'_view.php',$list_table_manual);
+  //write modul action 
 $db->buat_file('../../modul/'.$modul_name.'/'.$modul_name.'_action.php',$modul_action);
 //write modul edit form
 $db->buat_file('../../modul/'.$modul_name.'/'.$modul_name.'_edit.php',$modul_edit);
 //write detial form
 $db->buat_file('../../modul/'.$modul_name.'/'.$modul_name.'_detail.php',$modul_detail);
 } elseif($_POST['method_table']=='gallery') {
-	//write list table 
-	$db->buat_file('../../modul/'.$modul_name.'/'.$modul_name.'_view.php',$list_gallery);
+  //write list table 
+  $db->buat_file('../../modul/'.$modul_name.'/'.$modul_name.'_view.php',$list_gallery);
 //write gallery action 
 $db->buat_file('../../modul/'.$modul_name.'/'.$modul_name.'_action.php',$input_gallery_action);
 //write gallery detail
@@ -1052,16 +1052,16 @@ $db->buat_file('../../modul/'.$modul_name.'/'.$modul_name.'_remote.php',$gallery
 
 
 $data = array(
-	'nav_act'=>$modul_name,
-	'page_name'=>$_POST['page_name'],
-	'main_table'=>$_POST['table'],
-	'urutan_menu'=>$_POST['urutan_menu'],
-	'url'=>strtolower(str_replace(" ", "-", $_POST['page_name'])),
+  'nav_act'=>$modul_name,
+  'page_name'=>strtolower($_POST['page_name']),
+  'main_table'=>$_POST['table'],
+  'urutan_menu'=>$_POST['urutan_menu'],
+  'url'=>strtolower(str_replace(" ", "-", $_POST['page_name'])),
   'icon'=>$_POST['icon'],
     'parent'=>$parent,
     'tampil'=>$tampil,
     'type_menu'=>$_POST['type_menu']
-	);
+  );
     $db->insert('sys_menu',$data);
 
     $last_id= $db->get_last_id();  
