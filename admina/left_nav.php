@@ -78,56 +78,35 @@
                         </ul>
                         </li>
                         
-                           <?php 
-                         }
-          //ambil semua modul yang tampil
-          $modul = $db->fetch_custom('select * from sys_modul where tampil=? order by urutan asc',array('tampil'=>'Y'));
+          
+<?php
 
-          foreach ($modul as $main_menu) {
-
- $dt = $db->fetch_custom("select sys_modul.modul_name,sys_modul.icon,sys_menu.page_name from sys_modul 
-inner join sys_menu on sys_modul.id=sys_menu.modul_id
-inner join sys_menu_role on sys_menu.id=sys_menu_role.id_menu
-where sys_modul.id=? and sys_menu_role.group_id=? and sys_menu_role.read_act=?",array('sys_modul.id'=>$main_menu->id,'sys_menu_role.group_id'=>$_SESSION['level'],'sys_menu_role.read_act'=>'Y'));
-                if ($dt->rowCount()>0) {
-
-    
-            ?>
-               <li class="<?=$db->terpilih($path_url,$main_menu->id);?>">
+                  }
+// Select all entries from the menu table
+$result=$db->fetch_custom("select sys_menu.*,sys_menu_role.read_act,sys_menu_role.insert_act,sys_menu_role.update_act,sys_menu_role.delete_act,sys_menu_role.group_id from sys_menu
+left join sys_menu_role on sys_menu.id=sys_menu_role.id_menu
+where sys_menu_role.group_id=? and sys_menu_role.read_act=? ORDER BY parent, urutan_menu",array('sys_menu_role.group_id'=>$_SESSION['level'],'sys_menu_role.read_act'=>'Y'));
 
 
-                        <li class="treeview <?=$db->terpilih($path_url,$main_menu->id);?>">
-                            <a href="#">
-                                <i class="<?=$main_menu->icon;?>"></i>
-                                <span><?=ucwords($main_menu->modul_name);?></span>
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </a>
-                            <ul class="treeview-menu">
-                                <?php 
-$sub= $db->fetch_custom("select * from sys_menu where modul_id=? order by urutan_menu asc",array('modul_id'=>$main_menu->id));
-            foreach ($sub as $sub_menu) {
-               if (in_array($sub_menu->url, $role_user)) {
-                ?>
-   <li class="<?=($path_url==$sub_menu->url)?'active':'';?>">
-                <a href="<?=base_index().$sub_menu->url;?>">
-                  <i class="fa fa-circle-o"></i> <?=ucwords($sub_menu->page_name);?></a> 
-              </li>
-                <?php
-              } 
-              
-            }
-            ?>
+// Create a multidimensional array to list items and parents
+$menu = array(
+    'items' => array(),
+    'parents' => array()
+);
+// Builds the array lists with data from the menu table
+foreach ($result as $items) {
 
-                                </ul>
-                        </li>
+  $items = toArray($items);
 
-<?php 
-
-}
+      // Creates entry into items array with current menu item id ie. 
+    $menu['items'][$items['id']] = $items;
+    // Creates entry into parents array. Parents array contains a list of all items with children
+    $menu['parents'][$items['parent']][] = $items['id'];
 }
 
 
-?>
+echo $db->buildMenu($path_url,0, $menu);
+?> 
 
            </ul>
         </section>
@@ -136,4 +115,4 @@ $sub= $db->fetch_custom("select * from sys_menu where modul_id=? order by urutan
   <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
 
-       
+

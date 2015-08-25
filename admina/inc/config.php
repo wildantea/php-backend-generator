@@ -7,9 +7,9 @@ define( "DB_USERNAME", "root" );
 //password mysql
 define( "DB_PASSWORD", "mypatrick" );
 //dir admin
-define( "DIR_ADMIN", "generator_v2/admina/");
+define( "DIR_ADMIN", "php-backend-generator/admina/");
 //main directory
-define( "DIR_MAIN", "generator_v2/");
+define( "DIR_MAIN", "php-backend-generator/");
 
 
 define('DB_CHARACSET', 'utf8');

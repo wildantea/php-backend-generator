@@ -43,24 +43,7 @@ group by sys_group_users.id") as $isi) {
                   </select>
                         </div>
                       </div><!-- /.form-group -->
-<div class="form-group">
-                        <label for="User" class="control-label col-lg-2">Main Menu</label>
-                        <div class="col-lg-4">
-              
-                           <select name="menu" data-placeholder="Pilih Main Menu" class="form-control chzn-select col-lg-5" tabindex="2">
-                          <option value="1"></option>
-                        <?php foreach ($db->fetch_all('sys_modul') as $isi) {
-                           if ($_GET['menu']==$isi->id) {
-                     echo "<option value='$isi->id' selected>$isi->modul_name</option>";
-                  } else {
-                     echo "<option value='$isi->id'>$isi->modul_name</option>";
-                  }
-                        } ?>
-                      
-                  
-                  </select>
-                        </div>
-                      </div><!-- /.form-group -->
+
  <label for="Menu" class="control-label col-lg-2">&nbsp;</label>
                         <div class="col-lg-10">
 <button style="margin-top:10px;margin-bottom:10px" class="btn btn-primary">Show Menu</button>
@@ -88,7 +71,7 @@ group by sys_group_users.id") as $isi) {
                       </thead>
                       <tbody>
                         <?php 
-      $dtb=$db->fetch_custom("select sys_menu_role.read_act,sys_menu_role.insert_act,sys_menu_role.update_act,sys_menu_role.delete_act, sys_menu.page_name,sys_menu.urutan_menu,sys_group_users.level,sys_menu_role.id from sys_menu_role  inner join sys_menu on sys_menu_role.id_menu=sys_menu.id inner join sys_group_users on sys_menu_role.group_id=sys_group_users.id where sys_menu.modul_id=? and sys_group_users.id=?",array('sys_menu.modul_id'=>$_GET['menu'],'sys_group_users.id'=>$_GET
+      $dtb=$db->fetch_custom("select sys_menu.type_menu,sys_menu_role.read_act,sys_menu_role.insert_act,sys_menu_role.update_act,sys_menu_role.delete_act, sys_menu.page_name,sys_menu.urutan_menu,sys_group_users.level,sys_menu_role.id from sys_menu_role inner join sys_menu on sys_menu_role.id_menu=sys_menu.id inner join sys_group_users on sys_menu_role.group_id=sys_group_users.id where sys_group_users.id=? order by urutan_menu asc",array('sys_group_users.id'=>$_GET
         ['user']));
       $i=1;
       foreach ($dtb as $isi) {
@@ -97,7 +80,26 @@ group by sys_group_users.id") as $isi) {
         <?=$i;?></td>
         <td><?=$isi->page_name;?></td>
         <td><?=$isi->level;?></td>
-        <td><div class="checkbox">
+        <?php
+        if($isi->type_menu=='main')
+        {
+            ?>
+            <td>
+              <div class="checkbox">
+                            <label>
+                              <input class="uniform" type="checkbox" value="option1" onclick="read_act(<?=$isi->id;?>,this)" <?=($isi->read_act=='Y')?'checked=""':'';?>>
+                            </label>
+                          </div>
+            </td>
+            <td colspan="3">Main Menu</td>
+<?php
+        } else {
+
+
+
+        ?>
+        <td>
+        <div class="checkbox">
                             <label>
                               <input class="uniform" type="checkbox" value="option1" onclick="read_act(<?=$isi->id;?>,this)" <?=($isi->read_act=='Y')?'checked=""':'';?>>
                             </label>
@@ -120,6 +122,9 @@ group by sys_group_users.id") as $isi) {
                               <input class="uniform" type="checkbox" value="option1" onclick="delete_act(<?=$isi->id;?>,this)" <?=($isi->delete_act=='Y')?'checked=""':'';?>>
                             </label>
                           </div></td>
+                          <?php 
+                          }
+                          ?>
         </tr>
         <?php
         $i++;

@@ -50,18 +50,21 @@ INSERT INTO `sys_group_users` (`id`, `level`, `deskripsi`) VALUES
 -- Table structure for table `sys_menu`
 --
 
-CREATE TABLE IF NOT EXISTS `sys_menu` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nav_act` varchar(150) DEFAULT NULL,
-  `page_name` varchar(150) DEFAULT NULL,
-  `url` varchar(100) NOT NULL,
-  `main_table` varchar(150) DEFAULT NULL,
-  `urutan_menu` int(11) DEFAULT NULL,
-  `modul_id` int(11) DEFAULT NULL,
-  `dt_table` enum('Y','N') NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_sys_menu_sys_modul` (`modul_id`)
+CREATE TABLE `sys_menu` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `nav_act` VARCHAR(150) NULL DEFAULT NULL,
+  `page_name` VARCHAR(150) NULL DEFAULT NULL,
+  `url` VARCHAR(100) NOT NULL,
+  `main_table` VARCHAR(150) NULL DEFAULT NULL,
+  `icon` VARCHAR(150) NULL DEFAULT NULL,
+  `urutan_menu` INT(11) NULL DEFAULT NULL,
+  `parent` INT(11) NULL DEFAULT NULL,
+  `dt_table` ENUM('Y','N') NOT NULL,
+  `tampil` ENUM('Y','N') NOT NULL,
+  `type_menu` ENUM('main','page') NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
 
 -- --------------------------------------------------------
 
@@ -82,20 +85,6 @@ CREATE TABLE IF NOT EXISTS `sys_menu_role` (
   KEY `FK_sys_menu_role_sys_users` (`group_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `sys_modul`
---
-
-CREATE TABLE IF NOT EXISTS `sys_modul` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `modul_name` varchar(100) NOT NULL DEFAULT '0',
-  `urutan` int(11) NOT NULL DEFAULT '0',
-  `icon` varchar(50) NOT NULL DEFAULT '0',
-  `tampil` enum('Y','N') NOT NULL DEFAULT 'Y',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 

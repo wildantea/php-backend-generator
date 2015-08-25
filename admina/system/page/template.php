@@ -173,7 +173,7 @@ $list_table ='
                                 <h3 class="box-title">List '.ucwords($_POST['page_name']).'</h3>
                                 </div><!-- /.box-header -->
                                 <div class="box-body table-responsive">
-                                    <table id="'.$modul_name.'_dtb" class="table table-bordered table-striped">
+                                    <table id="dtb_'.$modul_name.'" class="table table-bordered table-striped">
                                    <thead>
                                      <tr>
 
@@ -221,7 +221,7 @@ $list_table ='
 ?>  
                 </section><!-- /.content -->
         <script type="text/javascript">
-var dataTable = $("#'.$modul_name.'_dtb").dataTable({
+var dataTable = $("#dtb_'.$modul_name.'").dataTable({
            "fnCreatedRow": function( nRow, aData, iDataIndex ) {
             var indek = aData.length-1;'."           
      $('td:eq('+indek+')', nRow).html(' <a href=\"<?=base_index();?>".str_replace(" ", "-", $_POST['page_name'])."/detail/'+aData[indek]+'\" class=\"btn btn-success btn-flat\"><i class=\"fa fa-eye\"></i></a> ".'<?=$edit;?> <?=$del;?>'."');
@@ -229,7 +229,7 @@ var dataTable = $("#'.$modul_name.'_dtb").dataTable({
    },
            'bProcessing': true,
             'bServerSide': true,
-        'sAjaxSource': '<?=base_admin();?>modul/".str_replace(" ", "_", $_POST['page_name'])."/".str_replace(" ", "_", $_POST['page_name'])."_data.php',
+        'sAjaxSource': '<?=base_admin();?>modul/".strtolower(str_replace(" ", "_", $_POST['page_name']))."/".strtolower(str_replace(" ", "_", $_POST['page_name']))."_data.php',
          /*     'aoColumnDefs': [{
                 'bSortable': false,
                 'aTargets': [0]
@@ -368,7 +368,7 @@ $tes=$dtable->get("'.$main_table.'", "'.$main_table.'.'.$primary_key.'", array('
 $main = '
 <?php
 switch ($path_act) {
-	case "tambah":
+  case "tambah":
           foreach ($db->fetch_all("sys_menu") as $isi) {
                if ($path_url==$isi->url&&$path_act=="tambah") {
                           if ($role_act["insert_act"]=="Y") {
@@ -379,10 +379,10 @@ switch ($path_act) {
                        } 
 
       }
-		break;
-	case "edit":
-		$data_edit = $db->fetch_single_row("'.$main_table.'","'.$primary_key.'",$path_id);
-		    foreach ($db->fetch_all("sys_menu") as $isi) {
+    break;
+  case "edit":
+    $data_edit = $db->fetch_single_row("'.$main_table.'","'.$primary_key.'",$path_id);
+        foreach ($db->fetch_all("sys_menu") as $isi) {
                       if ($path_url==$isi->url&&$path_act=="edit") {
                           if ($role_act["up_act"]=="Y") {
                              include "'.$modul_name.'_edit.php";
@@ -393,14 +393,14 @@ switch ($path_act) {
 
       }
 
-		break;
+    break;
       case "detail":
     $data_edit = $db->fetch_single_row("'.$main_table.'","'.$primary_key.'",$path_id);
     include "'.$modul_name.'_detail.php";
     break;
-	default:
-		include "'.$modul_name.'_view.php";
-		break;
+  default:
+    include "'.$modul_name.'_view.php";
+    break;
 }
 
 ?>';
@@ -548,46 +548,46 @@ session_start();
 include "../../inc/config.php";
 session_check();
 switch ($_GET["act"]) {
-	case "in":
+  case "in":
   '.$if_input_file.'
   '.$if_input_uimager.'
   '.$if_input_uimagef.'
-	$data = array('.$for_input_action.');
+  $data = array('.$for_input_action.');
   '.$for_file_in.'
   '.$for_uimager_in.'
   '.$for_uimagef_in.'
    '.$if_boolean.'
-		$in = $db->insert("'.$main_table.'",$data);
+    $in = $db->insert("'.$main_table.'",$data);
     '.$input_multi_image_action.'
-		if ($in=true) {
-			echo "good";
-		} else {
-			return false;
-		}
-		break;
-	case "delete":
+    if ($in=true) {
+      echo "good";
+    } else {
+      return false;
+    }
+    break;
+  case "delete":
     '.$for_uimagef_delete.'
     '.$for_uimager_delete.'
     '.$for_file_delete.'
-		$db->delete("'.$main_table.'","id",$_GET["id"]);
-		break;
-	case "up":
-	 $data = array('.$for_update_action.');
+    $db->delete("'.$main_table.'","id",$_GET["id"]);
+    break;
+  case "up":
+   $data = array('.$for_update_action.');
    '.$for_file.'
    '.$for_uimager.'
    '.$for_uimagef.'
 
     '.$if_boolean.'
-		$up = $db->update("'.$main_table.'",$data,"id",$_POST["id"]);
-		if ($up=true) {
-			echo "good";
-		} else {
-			return false; 
-		}
-		break;
-	default:
-		# code...
-		break;
+    $up = $db->update("'.$main_table.'",$data,"id",$_POST["id"]);
+    if ($up=true) {
+      echo "good";
+    } else {
+      return false; 
+    }
+    break;
+  default:
+    # code...
+    break;
 }
 
 ?>';

@@ -23,53 +23,53 @@
                                     <table id="dtb_manual" class="table table-bordered table-striped">
                                    <thead>
                                      <tr>
+                           <th style="width:25px" align="center">No</th>
                           <th>Nama Menu</th>
-                          <th>Icon</th>
-                          <th>Parent</th>
-                          <th>Urutan Menu</th>
-                          <th>Type Menu</th>
-                          <th>Tampil</th>
-                          
+													<th>Icon</th>
+													<th>Urutan Menu</th>
+													<th>Tampil</th>
+													
                           <th>Action</th>
                          
                         </tr>
                                       </thead>
                                         <tbody>
                                          <?php 
-      $dtb=$db->fetch_custom("select * from sys_menu ");
-    
-      foreach ($dtb as $isi) {
-        ?><tr id="line_<?=$isi->id;?>">
-<td><?=$isi->page_name;?></td>
-<td><i class="fa <?=$isi->icon;?>"></i></td>
-<td><?php
-if ($isi->parent==0) {
-  echo "none";
-} else {
-  echo $db->fetch_single_row('sys_menu','id',$isi->parent)->page_name;
-}
-  ?>
-</td>
+			$dtb=$db->fetch_custom("select sys_menu.page_name,sys_menu.icon,sys_menu.urutan_menu,sys_menu.tampil,sys_menu.id from sys_menu ");
+			$i=1;
+			foreach ($dtb as $isi) {
+				?><tr id="line_<?=$isi->id;?>">
+        <td align="center"><?=$i;?></td><td><?=$isi->page_name;?></td>
+<td><?=$isi->icon;?></td>
 <td><?=$isi->urutan_menu;?></td>
-<td><?=$isi->type_menu;?></td>
 <td><?=$isi->tampil;?></td>
 
         <td>
-     
-       <a href="<?=base_index();?>page/edit/<?=$isi->id;?>" class="btn btn-primary btn-flat"><i class="fa fa-pencil"></i></a>
-      <button class="btn btn-danger hapus btn-flat" data-uri="<?=base_admin();?>system/page/page_action.php" data-id="<?=$isi->id;?>"><i class="fa fa-trash-o"></i></button>
+        <a href="<?=base_index();?>menu/detail/<?=$isi->id;?>" class="btn btn-success btn-flat"><i class="fa fa-eye"></i></a> 
+        <?=($role_act["up_act"]=="Y")?'<a href="'.base_index().'menu/edit/'.$isi->id.'" class="btn btn-primary btn-flat"><i class="fa fa-pencil"></i></a>':"";?>  
+        <?=($role_act["del_act"]=="Y")?'<button class="btn btn-danger hapus btn-flat" data-uri="'.base_admin().'modul/menu/menu_action.php" data-id="'.$isi->id.'"><i class="fa fa-trash-o"></i></button>':"";?>
         </td>
         </tr>
-        <?php
-      
-      }
-      ?>
+				<?php
+				$i++;
+			}
+			?>
                                         </tbody>
                                     </table>
                                 </div><!-- /.box-body -->
                             </div><!-- /.box -->
                         </div>
                     </div>
-       <a href="<?=base_index();?>page/tambah" class="btn btn-primary btn-flat"><i class="fa fa-plus"></i> Tambah</a>
+        <?php
+       foreach ($db->fetch_all("sys_menu") as $isi) {
+                      if ($path_url==$isi->url) {
+                          if ($role_act["insert_act"]=="Y") {
+                    ?>
+          <a href="<?=base_index();?>menu/tambah" class="btn btn-primary btn-flat"><i class="fa fa-plus"></i> Tambah</a>
+                          <?php
+                          } 
+                       } 
+}
+?>  
                 </section><!-- /.content -->
         

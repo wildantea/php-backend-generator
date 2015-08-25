@@ -79,12 +79,10 @@
  <!-- jQuery 2.1.3 -->
    <script src="<?=base_admin();?>assets/login/js/jqueryform.js"></script>
   <script src="<?=base_admin();?>assets/login/js/validate.js"></script>
-
-
       <script src="<?=base_admin();?>assets/plugins/ckeditor/ckeditor.js"></script>
 
      <script src="<?=base_admin();?>assets/plugins/ckeditor/adapters/jquery.js"></script>
-
+<!-- ckeditor and kcfinder integration config -->
 <script type="text/javascript">
   $('textarea.editbox' ).ckeditor({
     filebrowserBrowseUrl: '<?=base_admin();?>assetsplugins/kcfinder/browse.php?type=files',
@@ -105,6 +103,7 @@ filebrowserFlashUploadUrl: '<?=base_admin();?>assets/plugins/kcfinder/upload.php
     closeEffect : 'none',
     loop : false
   });
+
 });
  </script>
 
@@ -125,8 +124,7 @@ filebrowserFlashUploadUrl: '<?=base_admin();?>assets/plugins/kcfinder/upload.php
   <!--image upload preview -->
      <script src="<?=base_admin();?>assets/plugins/holder/holder.js" type="text/javascript"></script>
      <script src="<?=base_admin();?>assets/plugins/holder/jasny-bootstrap.min.js" type="text/javascript"></script>
-    
-   <!-- date-picker -->
+  <!-- date-picker -->
         <script src="<?=base_admin();?>assets/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
     <!--switch button -->
      <script src="<?=base_admin();?>assets/plugins/switch/bootstrap-switch.min.js" type="text/javascript"></script>
@@ -147,6 +145,8 @@ filebrowserFlashUploadUrl: '<?=base_admin();?>assets/plugins/kcfinder/upload.php
             labelText: $(this).data('labelText')
         });
     });
+  //tags input here
+    $('#tags').tagsInput();
    //hapus multi foto
     $(".foto_banyak").on('click','.hapus_foto',function() {
         $(this).parent().remove();

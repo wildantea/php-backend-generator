@@ -18,17 +18,25 @@ switch ($_GET['act']) {
 		}
 		break;
 	case 'delete':
-	$db->deleteDirectory("../../modul/".$db->fetch_single_row('sys_menu','id',$_GET['id'])->nav_act);
-	$db->deleteDirectory("../../../upload/".$db->fetch_single_row('sys_menu','id',$_GET['id'])->nav_act);
+	$check_type = $db->fetch_single_row('sys_menu','id',$_GET['id']);
+	if ($check_type->type_menu=='page') {
+			$db->deleteDirectory("../../modul/".$db->fetch_single_row('sys_menu','id',$_GET['id'])->nav_act);
+		$db->deleteDirectory("../../../upload/".$db->fetch_single_row('sys_menu','id',$_GET['id'])->nav_act);
 		$db->delete('sys_menu_role','id_menu',$_GET['id']);
 		$db->delete('sys_menu','id',$_GET['id']);
+	} else {
+		$db->delete('sys_menu_role','id_menu',$_GET['id']);
+		$db->delete('sys_menu','id',$_GET['id']);
+	}
+
 
 		break;
 	case 'up':
 		$data = array(
 			'page_name'=>$_POST['page_name'],
-			'urutan_menu'=>$_POST['urutan'],
-			'modul_id'=>$_POST['modul_id']
+			'urutan_menu'=>$_POST['urutan_menu'],
+			'icon'=>$_POST['icon'],
+			'parent'=>$_POST['parent']
 			);
 		$up = $db->update('sys_menu',$data,'id',$_POST['id']);
 		if ($up=true) {

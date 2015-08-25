@@ -68,4 +68,19 @@ foreach ($db->fetch_custom("select read_act,insert_act,update_act,delete_act fro
   $role_act['del_act']=$role->delete_act;
 }
 
+//obj to array
+function toArray($obj)
+{
+    if (is_object($obj)) $obj = (array)$obj;
+    if (is_array($obj)) {
+        $new = array();
+        foreach ($obj as $key => $val) {
+            $new[$key] = toArray($val);
+        }
+    } else {
+        $new = $obj;
+    }
+
+    return $new;
+}
 ?>

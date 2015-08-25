@@ -20,32 +20,56 @@
                                 </div><!-- /.box-header -->
 
                   <div class="box-body">
-                        <form class="form-horizontal" id="input_page" action="<?=base_admin();?>system/page/input_page.php" method="post">
+                        <form class="form-horizontal" id="input_pagess" action="<?=base_admin();?>system/page/input_page.php" method="post">
                       <div class="form-group">
-                        <label class="control-label col-lg-2">Modul</label>
+                        <label for="text1" class="control-label col-lg-2">Page / Menu Name</label>
                         <div class="col-lg-10">
-                          <select data-placeholder="Pilih Modul" name="modul_id" class="form-control chzn-select" tabindex="2">
-                            <option value=""></option>
-                            <?php foreach ($db->fetch_all('sys_modul') as $isi) {
-                              echo "<option value='$isi->id'>$isi->modul_name</option>";
+                          <input type="text" id="text1" name="page_name" required placeholder="Page name" class="form-control">
+                        </div>
+                      </div><!-- /.form-group -->
+                           <div class="form-group">
+                        <label for="text1" class="control-label col-lg-2">Icon</label>
+                        <div class="col-lg-7">
+                          <input type="text" id="text1" name="icon" required placeholder="fa-camera-retro" class="form-control">
+                        <a target="_blank" href="<?=base_index();?>modul/icon">Referensi Icon (new window)</a>
+                        </div>
+                      </div><!-- /.form-group -->
+                             <div class="form-group">
+                 <label class="control-label col-lg-2">Type Menu</label>
+                 <div class="col-lg-10">
+                   <select data-placeholder="Pilih Modul" name="type_menu" onChange="type_of_menu(this.value)" class="form-control chzn-select" tabindex="2">
+                     <option value="main">Main (Tree Menu)</option>
+                     <option value="page">Page</option>
+                   </select>
+                 </div>
+               </div>
+                         <div class="form-group" id="parent">
+                        <label class="control-label col-lg-2">Parent</label>
+                        <div class="col-lg-10">
+                          <select data-placeholder="Pilih Modul" name="parent" class="form-control chzn-select" tabindex="2">
+                            <option value="0">None</option>
+                            <?php foreach ($db->fetch_custom('select * from sys_menu where url=""') as $isi) {
+                              echo "<option value='$isi->id'>$isi->page_name</option>";
                             }
                             ?>
                           </select>
                         </div>
                       </div>
-
-                      <div class="form-group">
-                        <label for="text1" class="control-label col-lg-2">Nama Page</label>
-                        <div class="col-lg-10">
-                          <input type="text" id="text1" name="page_name" required placeholder="Page name" class="form-control">
+                           <div class="form-group">
+                        <label for="text1" class="control-label col-lg-2">Urutan Menu</label>
+                        <div class="col-lg-4">
+                          <input type="text" id="text1" name="urutan_menu" required placeholder="Urutan Menu" class="form-control">
                         </div>
                       </div><!-- /.form-group -->
-                       <div class="form-group">
-                        <label for="text1" class="control-label col-lg-2">Urutan</label>
+                         <div class="form-group">
+                        <label for="Update" class="control-label col-lg-2">Tampil</label>
                         <div class="col-lg-10">
-                          <input type="text" id="text1" name="urutan_menu" required placeholder="urutan menu" class="form-control">
-                        </div>
+                        
+                          <input name="tampil" class="make-switch" data-on-text="Yes" data-off-text="No" type="checkbox" data-on-color="info" data-off-color="danger" checked="">
+                         </div>
                       </div><!-- /.form-group -->
+            
+                     <div id="type_menu" style="display:none">
                          <div class="form-group">
                         <label class="control-label col-lg-2">List Method</label>
                         <div class="col-lg-10">
@@ -57,6 +81,8 @@
                           <option value="gallery">Buat Gallery Album</option>
                         </select>
                         </div>
+                      </div>
+
                       </div>
 
                       <div id="list_type" style="display:none">
@@ -114,10 +140,29 @@
 
  
  <script type="text/javascript">
+//type menu 
 
+  function type_of_menu(val)
+  {
+      if (val=='single') {
+        //$(".another_choice").hide();
+          $("#type_menu").show();
+          $("#parent").hide();
+
+      } else if(val=='page')  {
+         $("#type_menu").show();
+            $("#parent").show();
+        //$(".another_choice").show();
+      }else  {
+         $("#type_menu").hide();
+            $("#parent").show();
+        //$(".another_choice").show();
+      }
+  }
   //list type
   function list_type(val)
   {
+   
       if (val=='gallery') {
         $(".another_choice").hide();
           $("#list_type").show();

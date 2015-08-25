@@ -3,6 +3,47 @@ include "../../inc/config.php";
 echo "<pre>";
 print_r($_POST);
 
+//jika type menu adalah single menu, parent set jadi 0
+if ($_POST['type_menu']=='single') {
+  $parent = 0;
+} else {
+  $parent = $_POST['parent'];
+}
+
+if(isset($_POST["tampil"])=="on")
+    {
+      $tampil = "Y";
+    } else { 
+      $tampil = "N";
+    }
+
+if ($_POST['type_menu']=='main') {
+     
+  $data = array(
+    'page_name'=>strtolower($_POST['page_name']),
+    'icon'=>$_POST['icon'],
+    'urutan_menu'=>$_POST['urutan_menu'],
+    'parent'=>$parent,
+    'tampil'=>$tampil,
+    'type_menu'=>$_POST['type_menu']
+    );
+  $db->insert('sys_menu',$data);
+  
+    $last_id= $db->get_last_id();  
+
+  foreach ($db->fetch_all('sys_group_users') as $group) {
+    if ($group->id==1) {
+      $db->fetch_custom("insert into sys_menu_role(id_menu,group_id,read_act,insert_act,update_act,delete_act)
+  values (".$last_id.",".$group->id.",'Y','Y','Y','Y')");
+    } else {
+      $db->fetch_custom("insert into sys_menu_role(id_menu,group_id,read_act,insert_act,update_act,delete_act)
+  values (".$last_id.",".$group->id.",'N','N','N','N')");
+    }
+    
+  }
+  exit();
+}
+
 
 
 $modul_name = str_replace(" ", "_", strtolower($_POST['page_name']));
@@ -1013,25 +1054,29 @@ $db->buat_file('../../modul/'.$modul_name.'/'.$modul_name.'_remote.php',$gallery
 $data = array(
 	'nav_act'=>$modul_name,
 	'page_name'=>$_POST['page_name'],
-	'modul_id'=>$_POST['modul_id'],
 	'main_table'=>$_POST['table'],
 	'urutan_menu'=>$_POST['urutan_menu'],
-	'url'=>strtolower(str_replace(" ", "-", $_POST['page_name']))
+	'url'=>strtolower(str_replace(" ", "-", $_POST['page_name'])),
+  'icon'=>$_POST['icon'],
+    'parent'=>$parent,
+    'tampil'=>$tampil,
+    'type_menu'=>$_POST['type_menu']
 	);
-$db->insert('sys_menu',$data);
+    $db->insert('sys_menu',$data);
 
-	  $last_id= $db->get_last_id();  
+    $last_id= $db->get_last_id();  
 
-foreach ($db->fetch_all('sys_group_users') as $group) {
-	if ($group->id==1) {
-		$db->fetch_custom("insert into sys_menu_role(id_menu,group_id,read_act,insert_act,update_act,delete_act)
-values (".$last_id.",".$group->id.",'Y','Y','Y','Y')");
-	} else {
-		$db->fetch_custom("insert into sys_menu_role(id_menu,group_id,read_act,insert_act,update_act,delete_act)
-values (".$last_id.",".$group->id.",'N','N','N','N')");
-	}
-	
-}
+  foreach ($db->fetch_all('sys_group_users') as $group) {
+    if ($group->id==1) {
+      $db->fetch_custom("insert into sys_menu_role(id_menu,group_id,read_act,insert_act,update_act,delete_act)
+  values (".$last_id.",".$group->id.",'Y','Y','Y','Y')");
+    } else {
+      $db->fetch_custom("insert into sys_menu_role(id_menu,group_id,read_act,insert_act,update_act,delete_act)
+  values (".$last_id.",".$group->id.",'N','N','N','N')");
+    }
+    
+  }
+
 print_r($tes);
 echo "</pre>";
 ?>

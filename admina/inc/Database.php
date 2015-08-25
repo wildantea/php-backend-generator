@@ -41,6 +41,8 @@ class Database {
         
     }
 
+
+
     /**
     * fetch only one row 
     * @param  string $table table name
@@ -338,20 +340,103 @@ class Database {
         };}return rmdir($dir);
     }
 
+
+
     //selected active menu
-    function terpilih($nav,$group_id)
+    public function terpilih($nav,$group_id)
     { 
-        $pilih='';
+      $pilih="";
       //  $mod = $this->fetch_single_row('sys_menu','nav_act',$nav);
-         $menu = $this->fetch_custom("select * from sys_menu where url=? and modul_id=?",array('url'=>$nav,'group_id'=>$group_id));
+        if ($nav!='') {
+             $menu = $this->fetch_custom("select * from sys_menu where url=?",array('url'=>$nav));
+
         foreach ($menu as $men) {
-          if ($men->url==$nav) {
-              $pilih='active';
-          } else {
-            $pilih='';
-          }
-        }
+        
+              $id_group[] = $group_id;
+           if ($men->parent!=0) {
+               $data = $this->fetch_single_row('sys_menu','id',$men->parent);
+
+
+            if ($group_id==$men->parent || $data->parent==$group_id ) {
+              
+             
+              
+             $pilih='active';
+            }  else {
+                 $pilih="";
+            }
+
+           } else {
+                       $data = $this->fetch_single_row('sys_menu','id',$men->parent);
+
+
+            if ($group_id==$men->parent) {
+              
+              
+             $pilih='active';
+            }  else {
+                 $pilih="";
+            }
+           }
+            
+         
+            
+       }
+         }
+        
+ 
+     
         return $pilih;
+    }
+    // Menu builder function, parentId 0 is the root
+    function buildMenu($url,$parent, $menu)
+    {
+       $html = "";
+       if (isset($menu['parents'][$parent]))
+       {
+           foreach ($menu['parents'][$parent] as $itemId)
+           {
+
+              if(!isset($menu['parents'][$itemId]))
+              {
+                 $html .= "<li ";
+                 $html .=($url==$menu['items'][$itemId]['url'])?'class="active"':'';
+                 $html.=">
+                   <a href='".$menu['items'][$itemId]['url']."'>";
+                 if($menu['items'][$itemId]['icon']!='')
+                  {
+                    $html.="<i class='fa ".$menu['items'][$itemId]['icon']."'></i>";
+                  } else {
+                    $html.="<i class='fa fa-circle-o'></i>";
+                  }
+                  $html.=$menu['items'][$itemId]['page_name']."</a></li>";
+              }
+         
+              if(isset($menu['parents'][$itemId]))
+              {
+           
+    
+               
+$html .= "<li class='treeview ".$this->terpilih($url,$menu['items'][$itemId]['id']);
+  
+     $html.="'><a href='#'>";
+                 if($menu['items'][$itemId]['icon']!='')
+                  {
+                    $html.="<i class='fa ".$menu['items'][$itemId]['icon']."'></i>";
+                  } else {
+                    $html.="<i class='fa fa-circle-o'></i>";
+                  }
+                  $html.="<span>".$menu['items'][$itemId]['page_name']."</span>
+                                    <i class='fa fa-angle-left pull-right'></i>
+                                </a>";
+$html .="<ul class='treeview-menu'>";
+$html .=$this->buildMenu($url,$itemId, $menu);
+$html .= "</ul></li>";
+              }
+           }
+          
+       }
+       return $html;
     }
 
     //search function 
