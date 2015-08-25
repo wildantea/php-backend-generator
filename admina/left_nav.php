@@ -37,7 +37,7 @@
               if ($_SESSION['level']==1) {
                 ?>
              
-              <li class="treeview <?=($path_url=='install'||$path_url=='user-management'||$path_url=='page'||$path_url=='modul'||$path_url=='menu-management'||$path_url=='group-user')?'active':'';?>">
+              <li class="treeview <?=($path_url=='install'||$path_url=='user-management'||$path_url=='page'||$path_url=='menu-management'||$path_url=='group-user')?'active':'';?>">
                         <a href="#">
                         <i class="fa fa-bar-chart-o"></i>
                         <span>System Setting</span>
@@ -50,11 +50,7 @@
                                 <i class="fa fa-circle-o"></i> <span>Install</span>
                             </a>
                         </li>
-                        <li class="<?=($path_url=='modul')?'active':'';?>">
-                            <a href="<?=base_index();?>modul">
-                                <i class="fa fa-circle-o"></i> <span>Modul</span>
-                            </a>
-                        </li>
+                   
                          <li class="<?=($path_url=='page')?'active':'';?>">
                             <a href="<?=base_index();?>page">
                                 <i class="fa fa-circle-o"></i> <span>Page / Menu</span>
