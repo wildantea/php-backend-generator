@@ -48,7 +48,8 @@ switch ($path_url) {
 	//jika url yang di dipanggil ada di role user, include page  
 	foreach ($db->fetch_all('sys_menu') as $isi) {
 		if (in_array($isi->url, $role_user)) {
-               		if ($path_url==$isi->url) {
+
+               		if ($path_url!='' && $path_url==$isi->url) {
                		
 					include "modul/".$isi->nav_act."/".$isi->nav_act.".php";
 					} 

@@ -402,7 +402,7 @@ class Database {
                  $html .= "<li ";
                  $html .=($url==$menu['items'][$itemId]['url'])?'class="active"':'';
                  $html.=">
-                   <a href='".$menu['items'][$itemId]['url']."'>";
+                   <a href='".base_index().$menu['items'][$itemId]['url']."'>";
                  if($menu['items'][$itemId]['icon']!='')
                   {
                     $html.="<i class='fa ".$menu['items'][$itemId]['icon']."'></i>";

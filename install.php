@@ -19,9 +19,6 @@ SET time_zone = \"+00:00\";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
 
---
--- Database: `back_end`
---
 
 -- --------------------------------------------------------
 
@@ -41,8 +38,8 @@ CREATE TABLE IF NOT EXISTS `sys_group_users` (
 --
 
 INSERT INTO `sys_group_users` (`id`, `level`, `deskripsi`) VALUES
-(1, 'admin', 'Administrator'),
-(4, 'users', 'some basic users');
+(1, 'admin', 'Administrator')
+
 
 -- --------------------------------------------------------
 
@@ -117,11 +114,6 @@ INSERT INTO `sys_users` (`id`, `first_name`, `last_name`, `username`, `password`
 -- Constraints for dumped tables
 --
 
---
--- Constraints for table `sys_menu`
---
-ALTER TABLE `sys_menu`
-  ADD CONSTRAINT `FK_sys_menu_sys_modul` FOREIGN KEY (`modul_id`) REFERENCES `sys_modul` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `sys_menu_role`
