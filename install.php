@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `sys_group_users` (
 --
 
 INSERT INTO `sys_group_users` (`id`, `level`, `deskripsi`) VALUES
-(1, 'admin', 'Administrator')
+(1, 'admin', 'Administrator');
 
 
 -- --------------------------------------------------------
@@ -99,6 +99,7 @@ CREATE TABLE IF NOT EXISTS `sys_users` (
   `date_created` date DEFAULT NULL,
   `foto_user` varchar(150) DEFAULT NULL,
   `id_group` int(11) DEFAULT NULL,
+  `aktif` ENUM('Y','N') NOT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_sys_users_sys_group_users` (`id_group`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;

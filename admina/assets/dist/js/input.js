@@ -70,7 +70,7 @@ $("#tgl2").datepicker( {
                          $('.user_exist').fadeIn();
                                 //$('.sukses').html(data);
                               } else {
-                                $('.notif_top_up').fadeIn(1000);
+                                $('.notif_top').fadeIn(1000);
                                  setTimeout(function () {
                                  window.location.href = "./"; //will redirect to your blog page (an ex: blog.html)
                               }, 2000); //will call the function after 2 secs.

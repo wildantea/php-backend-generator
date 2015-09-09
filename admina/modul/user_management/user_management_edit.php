@@ -77,7 +77,20 @@
               </select>
                         </div>
                       </div><!-- /.form-group -->
-
+       <div class="form-group">
+                        <label for="aktif" class="control-label col-lg-2">aktif</label>
+                        <div class="col-lg-10">
+                          <?php if ($data_edit->aktif=="Y") {
+      ?>
+      <input name="aktif" class="make-switch" type="checkbox" checked>
+      <?php
+    } else {
+      ?>
+      <input name="aktif" class="make-switch" type="checkbox">
+      <?php
+    }?>
+                        </div>
+                      </div><!-- /.form-group -->
                       <input type="hidden" name="id" value="<?=$data_edit->id;?>">
                       <div class="form-group">
                         <label for="tags" class="control-label col-lg-2">&nbsp;</label>

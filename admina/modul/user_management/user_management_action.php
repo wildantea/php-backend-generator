@@ -20,9 +20,20 @@ switch ($_GET["act"]) {
 			exit();
 		}
 
-	$data = array("first_name"=>$_POST["first_name"],"last_name"=>$_POST["last_name"],"username"=>$_POST["username"],"password"=>md5($_POST["password_baru"]),"email"=>$_POST["email"],"id_group"=>$_POST["id_group"],"date_created"=>date('Y-m-d'));
-  
 
+
+	$data = array("first_name"=>$_POST["first_name"],"last_name"=>$_POST["last_name"],"username"=>$_POST["username"],"password"=>md5($_POST["password_baru"]),"email"=>$_POST["email"],"id_group"=>$_POST["id_group"],"date_created"=>date('Y-m-d'));
+
+	 if(isset($_POST["aktif"])=="on")
+    {
+      $aktif = array("aktif"=>"Y");
+      $data=array_merge($data,$aktif);
+    } else { 
+      $aktif = array("aktif"=>"N");
+      $data=array_merge($data,$aktif);
+    }
+  
+if(isset($_FILES["foto_user"]["name"])) {
                     if (!preg_match("/.(png|jpg|jpeg|gif|bmp)$/i", $_FILES["foto_user"]["name"]) ) {
 
 							echo "pastikan file yang anda pilih png|jpg|jpeg|gif";
@@ -36,6 +47,7 @@ $foto_user = array("foto_user"=>$_FILES["foto_user"]["name"]);
 							$data = array_merge($data,$foto_user);
 
 						}
+} 
   
 		$in = $db->insert("sys_users",$data);
 		if ($in=true) {
@@ -44,6 +56,7 @@ $foto_user = array("foto_user"=>$_FILES["foto_user"]["name"]);
 			return false;
 		}
 		break;
+
 	case "delete":
 		$db->deleteDirectory("../../upload/profil/".$db->fetch_single_row("sys_users","id",$_POST["id"])->foto_user);
 		$db->delete("sys_users","id",$_GET["id"]);
@@ -66,7 +79,14 @@ $db->deleteDirectory("../../assets/profil_foto/".$db->fetch_single_row("sys_user
 
                          }
    
-
+ if(isset($_POST["aktif"])=="on")
+    {
+      $aktif = array("aktif"=>"Y");
+      $data=array_merge($data,$aktif);
+    } else { 
+      $aktif = array("aktif"=>"N");
+      $data=array_merge($data,$aktif);
+    }
     
 		$up = $db->update("sys_users",$data,"id",$_POST["id"]);
 		if ($up=true) {

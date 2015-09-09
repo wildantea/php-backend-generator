@@ -37,6 +37,7 @@
                           <th>Username</th>
 <th>Email</th>
 <th>level</th>
+<th>Aktif</th>
 
                           <th>Action</th>
                          
@@ -52,7 +53,7 @@
           $search = "where $search_condition";
         }
 
-      $dtb=$pg->myquery("select sys_users.username,sys_users.email,sys_group_users.level,sys_users.id from sys_users  inner join sys_group_users on sys_users.id_group=sys_group_users.id $search",$limit);
+      $dtb=$pg->myquery("select sys_users.aktif,sys_users.username,sys_users.email,sys_group_users.level,sys_users.id from sys_users  inner join sys_group_users on sys_users.id_group=sys_group_users.id $search",$limit);
        $no=$pg->Num($limit);
         $count=$pg->Num($limit);
       if ($dtb->rowCount()<1) {
@@ -62,6 +63,7 @@
         ?><tr id="line_<?=$isi->id;?>"><td align="center"><?=$no;?></td><td><?=$isi->username;?></td>
 <td><?=$isi->email;?></td>
 <td><?=$isi->level;?></td>
+<td><?=$isi->aktif;?></td>
 <td>
 <a href="<?=base_index();?>user-management/detail/<?=$isi->id;?>" class="btn btn-success"><i class="fa fa-eye"></i></a> 
 <a href="<?=base_index();?>user-management/edit/<?=$isi->id;?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a>

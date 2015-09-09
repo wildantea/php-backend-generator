@@ -388,7 +388,7 @@ class Database {
      
         return $pilih;
     }
-    // Menu builder function, parentId 0 is the root
+     // Menu builder function, parentId 0 is the root
     function buildMenu($url,$parent, $menu)
     {
        $html = "";
@@ -409,7 +409,7 @@ class Database {
                   } else {
                     $html.="<i class='fa fa-circle-o'></i>";
                   }
-                  $html.=$menu['items'][$itemId]['page_name']."</a></li>";
+                  $html.=ucwords($menu['items'][$itemId]['page_name'])."</a></li>";
               }
          
               if(isset($menu['parents'][$itemId]))
@@ -426,7 +426,7 @@ $html .= "<li class='treeview ".$this->terpilih($url,$menu['items'][$itemId]['id
                   } else {
                     $html.="<i class='fa fa-circle-o'></i>";
                   }
-                  $html.="<span>".$menu['items'][$itemId]['page_name']."</span>
+                  $html.="<span>".ucwords($menu['items'][$itemId]['page_name'])."</span>
                                     <i class='fa fa-angle-left pull-right'></i>
                                 </a>";
 $html .="<ul class='treeview-menu'>";

@@ -20,7 +20,7 @@
                                 </div><!-- /.box-header -->
 
                   <div class="box-body">
-                        <form class="form-horizontal" id="input_pagess" action="<?=base_admin();?>system/page/input_page.php" method="post">
+                        <form class="form-horizontal" id="input_page" action="<?=base_admin();?>system/page/input_page.php" method="post">
                       <div class="form-group">
                         <label for="text1" class="control-label col-lg-2">Page / Menu Name</label>
                         <div class="col-lg-10">
@@ -31,7 +31,7 @@
                         <label for="text1" class="control-label col-lg-2">Icon</label>
                         <div class="col-lg-7">
                           <input type="text" id="text1" name="icon" required placeholder="fa-camera-retro" class="form-control">
-                        <a target="_blank" href="<?=base_index();?>modul/icon">Referensi Icon (new window)</a>
+                        <a target="_blank" href="<?=base_index();?>page/icon">Referensi Icon (new window)</a>
                         </div>
                       </div><!-- /.form-group -->
                              <div class="form-group">

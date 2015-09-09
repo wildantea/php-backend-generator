@@ -77,7 +77,7 @@
                             <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
                             <div>
                               <span class="btn btn-default btn-file"><span class="fileinput-new">Select image</span> <span class="fileinput-exists">Change</span> 
-                                <input type="file" name="foto_user" accept="image/*">
+                                <input type="file" name="foto_user" accept="image/*" required>
                               </span> 
                               <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a> 
                             </div>
@@ -95,6 +95,12 @@
                		echo "<option value='$isi->id'>$isi->level</option>";
                } ?>
               </select>
+                        </div>
+                      </div><!-- /.form-group -->
+ <div class="form-group">
+                        <label for="aktif" class="control-label col-lg-2">aktif</label>
+                        <div class="col-lg-10">
+                          <input name="aktif" class="make-switch" type="checkbox" checked>
                         </div>
                       </div><!-- /.form-group -->
 
