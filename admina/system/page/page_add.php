@@ -1,4 +1,4 @@
-       
+
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
@@ -30,7 +30,7 @@
                            <div class="form-group">
                         <label for="text1" class="control-label col-lg-2">Icon</label>
                         <div class="col-lg-7">
-                          <input type="text" id="text1" name="icon" required placeholder="fa-camera-retro" class="form-control">
+                          <input type="text" id="text1" name="icon" placeholder="fa-camera-retro" class="form-control">
                         <a target="_blank" href="<?=base_index();?>page/icon">Referensi Icon (new window)</a>
                         </div>
                       </div><!-- /.form-group -->
@@ -64,11 +64,11 @@
                          <div class="form-group">
                         <label for="Update" class="control-label col-lg-2">Tampil</label>
                         <div class="col-lg-10">
-                        
+
                           <input name="tampil" class="make-switch" data-on-text="Yes" data-off-text="No" type="checkbox" data-on-color="info" data-off-color="danger" checked="">
                          </div>
                       </div><!-- /.form-group -->
-            
+
                      <div id="type_menu" style="display:none">
                          <div class="form-group">
                         <label class="control-label col-lg-2">List Method</label>
@@ -129,18 +129,18 @@
                       </div><!-- /.form-group -->
                     </form>
 <a href="<?=base_index();?>page" class="btn btn-success btn-flat"><i class="fa fa-step-backward"></i> Kembali</a>
-          
+
                   </div>
                   </div>
               </div>
 </div>
-                  
-                </section><!-- /.content -->
-        
 
- 
+                </section><!-- /.content -->
+
+
+
  <script type="text/javascript">
-//type menu 
+//type menu
 
   function type_of_menu(val)
   {
@@ -162,7 +162,7 @@
   //list type
   function list_type(val)
   {
-   
+
       if (val=='gallery') {
         $(".another_choice").hide();
           $("#list_type").show();
@@ -193,28 +193,28 @@
   //copy lable on check
   function copy_to(table,col)
   {
-   
+
     $("#label_"+table+"_"+col).val(col);
   }
    //copy lable on check list table
   function copy_to1(table,col)
   {
-   
+
     $("#label1_"+table+"_"+col).val(col);
   }
 
-  //onchange type 
+  //onchange type
   function tipe(val,col)
   {
-    
+
     if (val=='select') {
-        $.ajax({                                                                                                                                                                
+        $.ajax({
       url: "<?=base_admin();?>system/page/isi_from_table.php?col="+col,
       success:function(data){
         $("#type_content_"+col).html(data);
         }
       });
-  
+
     } else if(val=='uimager')
         {
             $("#type_content_"+col).html("<div class='form-group'> <label class='control-label col-lg-2'>Width </label> <div class='col-lg-3' style='padding-left:0;padding-top:2px'> <input type='text' id='required' name='width["+col+"]' class='form-control'> </div> </div><div class='form-group'> <label class='control-label col-lg-2'>Height </label> <div class='col-lg-3' style='padding-left:0;padding-top:2px'> <input type='text' id='required' name='height["+col+"]' class='form-control'> </div> </div> ");
@@ -236,7 +236,7 @@
   //param table, and column
   function from_table(tb,col)
   {
-    
+
       $.ajax({
       url: "<?=base_admin();?>system/page/isi_on.php?tb="+tb+"&col="+col,
       success:function(data){
@@ -314,7 +314,7 @@
       });
   }
 
-  //get foreign album table 
+  //get foreign album table
   function get_foreign_album(key)
   {
      $.ajax({
@@ -324,11 +324,11 @@
         }
       });
   }
-  //album table 
+  //album table
    //multi image foreign key
   function get_album(key)
   {
-   
+
      $.ajax({
       url: "<?=base_admin();?>system/page/isi_create_album.php?table="+key,
       success:function(data){
@@ -340,7 +340,7 @@
   //multi image foreign key
   function change_key(key)
   {
-   
+
      $.ajax({
       url: "<?=base_admin();?>system/page/isi_remote_key.php?table="+key,
       success:function(data){
@@ -348,7 +348,7 @@
         }
       });
   }
-  //hapus multi 
+  //hapus multi
   function hapus_multi()
   {
     $("#isi_remote").html('');

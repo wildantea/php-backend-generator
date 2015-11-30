@@ -1,14 +1,14 @@
 <?php
 /**
  * PDO mysql database helper class
- * 
+ *
  * @author wildantea <wildannudin@gmail.com>
  * @copyright june 2013
  */
 class Database {
-  
+
     private $pdo;
-    
+
     public function __construct()
     {
         try {
@@ -23,8 +23,8 @@ class Database {
     /**
     * custom query , joining multiple table, aritmathic etc
     * @param  string $sql  custom query
-    * @param  array $data associative array 
-    * @return array  recordset 
+    * @param  array $data associative array
+    * @return array  recordset
     */
     public function fetch_custom( $sql,$data=null) {
         if ($data!==null) {
@@ -38,20 +38,20 @@ class Database {
         }
         $sel->setFetchMode( PDO::FETCH_OBJ );
         return $sel;
-        
+
     }
 
 
 
     /**
-    * fetch only one row 
+    * fetch only one row
     * @param  string $table table name
     * @param  string $col condition column
     * @param  string $val value column
     * @return array recordset
     */
-    public function fetch_single_row($table,$col,$val)     
-    {       
+    public function fetch_single_row($table,$col,$val)
+    {
         $nilai=array($val);
         $sel = $this->pdo->prepare("SELECT * FROM $table WHERE $col=?");
         $sel->execute($nilai);
@@ -77,7 +77,7 @@ class Database {
     }
 
     /**
-    * fetch all data 
+    * fetch all data
     * @param  string $table table name
     * @return array recordset
     */
@@ -108,15 +108,15 @@ class Database {
     /**
     * fetch row with condition
     * @param  string $table table name
-    * @param  array $col which columns name would be select 
+    * @param  array $col which columns name would be select
     * @param  array $where what column will be the condition
     * @return array recordset
     */
     public function fetch_multi_row($table,$col,$where)
     {
 
-        $data = array_values( $where ); 
-        //grab keys 
+        $data = array_values( $where );
+        //grab keys
         $cols=array_keys($where);
         $colum=implode(', ', $col);
         foreach ($cols as $key) {
@@ -139,14 +139,14 @@ class Database {
 
     /**
     * check if there is exist data
-    * @param  string $table table name 
+    * @param  string $table table name
     * @param  array $dat array list of data to find
     * @return true or false
     */
     public function check_exist($table,$dat) {
 
-        $data = array_values( $dat ); 
-       //grab keys 
+        $data = array_values( $dat );
+       //grab keys
         $cols=array_keys($dat);
         $col=implode(', ', $cols);
 
@@ -170,13 +170,13 @@ class Database {
             return true;
         } else {
             return false;
-        }     
+        }
     }
     /**
     * search data
     * @param  string $table table name
     * @param  array $col   column name
-    * @param  array $where where condition 
+    * @param  array $where where condition
     * @return array recordset
     */
     public function search($table,$col,$where) {
@@ -185,7 +185,7 @@ class Database {
            $val = '%'.$key.'%';
            $value[]=$val;
         }
-       //grab keys 
+       //grab keys
         $cols=array_keys($where);
         $colum=implode(', ', $col);
 
@@ -201,7 +201,7 @@ class Database {
           $im=implode('', $mark);
              $sel = $this->pdo->prepare("SELECT $colum from $table WHERE $im");
         }
-           
+
         $sel->execute($value);
         $sel->setFetchMode( PDO::FETCH_OBJ );
         return  $sel;
@@ -215,7 +215,7 @@ class Database {
 
         if( $dat !== null )
         $data = array_values( $dat );
-        //grab keys 
+        //grab keys
         $cols=array_keys($dat);
         $col=implode(', ', $cols);
 
@@ -245,18 +245,18 @@ class Database {
     */
     public function update($table,$dat,$id,$val) {
         if( $dat !== null )
-        $data = array_values( $dat ); 
+        $data = array_values( $dat );
         array_push($data,$val);
         //grab keys
         $cols=array_keys($dat);
         $mark=array();
         foreach ($cols as $col) {
-        $mark[]=$col."=?"; 
+        $mark[]=$col."=?";
         }
         $im=implode(', ', $mark);
         $ins = $this->pdo->prepare("UPDATE $table SET $im where $id=?");
         $ins->execute( $data );
-       
+
     }
 
     /**
@@ -265,16 +265,14 @@ class Database {
     * @param  string $where column name for condition (commonly primay key column name)
     * @param   int $id   key value
     */
-    public function delete( $table, $where,$id ) { 
-        $data = array( $id ); 
+    public function delete( $table, $where,$id ) {
+        $data = array( $id );
         $sel = $this->pdo->prepare("Delete from $table where $where=?" );
         $sel->execute( $data );
     }
 
-    
-    public function __destruct() {
-    $this->pdo = null;
-    }
+
+
 
     function get_settings($name){
     if(is_file("settings.cfg")) $file = "settings.cfg";
@@ -344,23 +342,23 @@ class Database {
 
     //selected active menu
     public function terpilih($nav,$group_id)
-    { 
+    {
       $pilih="";
       //  $mod = $this->fetch_single_row('sys_menu','nav_act',$nav);
         if ($nav!='') {
              $menu = $this->fetch_custom("select * from sys_menu where url=?",array('url'=>$nav));
 
         foreach ($menu as $men) {
-        
+
               $id_group[] = $group_id;
            if ($men->parent!=0) {
                $data = $this->fetch_single_row('sys_menu','id',$men->parent);
 
 
             if ($group_id==$men->parent || $data->parent==$group_id ) {
-              
-             
-              
+
+
+
              $pilih='active';
             }  else {
                  $pilih="";
@@ -371,21 +369,21 @@ class Database {
 
 
             if ($group_id==$men->parent) {
-              
-              
+
+
              $pilih='active';
             }  else {
                  $pilih="";
             }
            }
-            
-         
-            
+
+
+
        }
          }
-        
- 
-     
+
+
+
         return $pilih;
     }
      // Menu builder function, parentId 0 is the root
@@ -411,14 +409,14 @@ class Database {
                   }
                   $html.=ucwords($menu['items'][$itemId]['page_name'])."</a></li>";
               }
-         
+
               if(isset($menu['parents'][$itemId]))
               {
-           
-    
-               
+
+
+
 $html .= "<li class='treeview ".$this->terpilih($url,$menu['items'][$itemId]['id']);
-  
+
      $html.="'><a href='#'>";
                  if($menu['items'][$itemId]['icon']!='')
                   {
@@ -434,12 +432,12 @@ $html .=$this->buildMenu($url,$itemId, $menu);
 $html .= "</ul></li>";
               }
            }
-          
+
        }
        return $html;
     }
 
-    //search function 
+    //search function
     public function getRawWhereFilterForColumns($filter, $search_columns)
     {
         $filter=addslashes($filter);
@@ -481,14 +479,14 @@ $html .= "</ul></li>";
         {
         $src = imagecreatefrombmp($uploadedfile);
         }
-        
+
         list($width,$height)=getimagesize($uploadedfile);
         if ($tinggi!=null) {
             $newheight=$tinggi;
         } else {
             $newheight=($height/$width)*$newwidth;
         }
-        
+
         $tmp=imagecreatetruecolor($newwidth,$newheight);
         imagecopyresampled($tmp,$src,0,0,0,0,$newwidth,$newheight,$width,$height);
         $filename = $path.$actual_image_name; //PixelSize_TimeStamp.jpg
@@ -496,6 +494,10 @@ $html .= "</ul></li>";
         imagedestroy($tmp);
         return $filename;
         }
-}  
+
+         public function __destruct() {
+    $this->pdo = null;
+    }
+}
 
 ?>
