@@ -1,6 +1,6 @@
 $(function(){
 
-   $(".table").on('click','.hapus',function() {
+   $(".table").on('click','.hapus',function(event) {
 
     event.preventDefault();
     var currentBtn = $(this);
@@ -12,12 +12,12 @@ $(function(){
     $('#ucing')
         .modal({ keyboard: false })
         .one('click', '#delete', function (e) {
-        
+
                 $.ajax({
 			    type: "POST",
 			    url: uri+"?act=delete&id="+id,
 			    success: function(data){
-			    
+
 			        $("#line_"+id).fadeOut("slow");
 			    }
 			    });
@@ -25,11 +25,11 @@ $(function(){
 
         });
 
-          
-     
+
+
   });
 
-$('body').on('click', '.hapus_foto', function() {
+$('body').on('click', '.hapus_foto', function(event) {
 
     event.preventDefault();
     var currentBtn = $(this);
@@ -40,14 +40,14 @@ $('body').on('click', '.hapus_foto', function() {
     $('#ucing')
         .modal({ keyboard: false })
         .one('click', '#delete', function (e) {
-        
+
                 $.ajax({
           type: "POST",
           url: uri+"?act=hapus_foto&id="+id,
           success: function(data){
             console.log(data);
-            
-            
+
+
               $("#foto_"+id).remove();
           }
           });
@@ -55,11 +55,11 @@ $('body').on('click', '.hapus_foto', function() {
           //location.reload();
         });
 
-          
-     
+
+
   });
 
-$('body').on('click', '.hapus_album', function() {
+$('body').on('click', '.hapus_album', function(event) {
 
     event.preventDefault();
     var currentBtn = $(this);
@@ -71,7 +71,7 @@ $('body').on('click', '.hapus_album', function() {
     $('#ucing')
         .modal({ keyboard: false })
         .one('click', '#delete', function (e) {
-        
+
                 $.ajax({
           type: "POST",
           url: uri+"?act=hapus_album&id="+id,
@@ -83,8 +83,8 @@ $('body').on('click', '.hapus_album', function() {
          window.location=gallery_uri;
         });
 
-          
-     
+
+
   });
 
 

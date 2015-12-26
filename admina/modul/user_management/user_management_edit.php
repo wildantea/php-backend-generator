@@ -1,5 +1,5 @@
 
- 
+
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
@@ -30,21 +30,22 @@
                       <div class="form-group">
                         <label for="First Name" class="control-label col-lg-2">First Name</label>
                         <div class="col-lg-10">
-                          <input type="text" id="first_name" name="first_name" value="<?=$data_edit->first_name;?>" class="form-control" required> 
+                          <input type="text" id="first_name" name="first_name" value="<?=$data_edit->first_name;?>" class="form-control" required>
                         </div>
                       </div><!-- /.form-group -->
 <div class="form-group">
                         <label for="Last Name" class="control-label col-lg-2">Last Name</label>
                         <div class="col-lg-10">
-                          <input type="text" id="last_name" name="last_name" value="<?=$data_edit->last_name;?>" class="form-control" > 
+                          <input type="text" id="last_name" name="last_name" value="<?=$data_edit->last_name;?>" class="form-control" >
                         </div>
                       </div><!-- /.form-group -->
 <div class="form-group">
                         <label for="Email" class="control-label col-lg-2">Email</label>
                         <div class="col-lg-10">
-                          <input type="text" id="email" data-rule-email="true" name="email" value="<?=$data_edit->email;?>" class="form-control" > 
+                          <input type="text" id="email" data-rule-email="true" name="email" value="<?=$data_edit->email;?>" class="form-control" >
                         </div>
                       </div><!-- /.form-group -->
+
 <div class="form-group">
                         <label for="Foto" class="control-label col-lg-2">Foto</label>
                         <div class="col-lg-10">
@@ -52,22 +53,23 @@
                     <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;">
                     <img src="../../../assets/profil_foto/<?=$data_edit->foto_user?>"></div>
                     <div>
-                      <span class="btn btn-default btn-file"><span class="fileinput-new">Select image</span> <span class="fileinput-exists">Change</span> 
+                      <span class="btn btn-default btn-file"><span class="fileinput-new">Select image</span> <span class="fileinput-exists">Change</span>
                         <input type="file" name="foto_user" accept="image/*">
-                      </span> 
-                      <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a> 
+                      </span>
+                      <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
                     </div>
                   </div>
-                       
+
                         </div>
                       </div><!-- /.form-group -->
+
 <div class="form-group">
                         <label for="Group User" class="control-label col-lg-2">Group User</label>
                         <div class="col-lg-10">
                           <select name="id_group" data-placeholder="Pilih Group User..." class="form-control chzn-select" tabindex="2" >
                <option value=""></option>
              <?php foreach ($db->fetch_custom("select * from sys_group_users ") as $isi) {
-            
+
                		if ($data_edit->id_group==$isi->id) {
                			echo "<option value='$isi->id' selected>$isi->level</option>";
                		} else {
@@ -100,12 +102,12 @@
                       </div><!-- /.form-group -->
                     </form>
                     <a href="<?=base_index();?>user-management" class="btn btn-success">Kembali</a>
-          
+
                   </div>
                   </div>
               </div>
 </div>
-                  
+
                 </section><!-- /.content -->
-        
- 
+
+
