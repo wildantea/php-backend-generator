@@ -57,7 +57,7 @@
                         <div class="col-lg-10">
                           <div class="fileinput fileinput-new" data-provides="fileinput">
                     <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;">
-                    <img src="../../../assets/profil_foto/<?=$data_edit->foto_user?>"></div>
+                    <img src="../../../../upload/back_profil_foto/<?=$data_edit->foto_user?>"></div>
                   </div>
                         </div>
                       </div><!-- /.form-group -->
@@ -70,18 +70,18 @@
                			echo "<input disabled class='form-control' type='text' value='$isi->level'>";
                		}
                } ?>
-              
+
                         </div>
                       </div><!-- /.form-group -->
 
-                   
+
                     </form>
                     <a href="<?=base_index();?>user-management" class="btn btn-success">Kembali</a>
-          
+
                   </div>
                   </div>
               </div>
 </div>
-                  
+
                 </section><!-- /.content -->
-        
+

@@ -51,7 +51,7 @@
                         <div class="col-lg-10">
                           <div class="fileinput fileinput-new" data-provides="fileinput">
                     <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;">
-                    <img src="../../../assets/profil_foto/<?=$data_edit->foto_user?>"></div>
+                    <img src="../../../../upload/back_profil_foto/<?=$data_edit->foto_user?>"></div>
                     <div>
                       <span class="btn btn-default btn-file"><span class="fileinput-new">Select image</span> <span class="fileinput-exists">Change</span>
                         <input type="file" name="foto_user" accept="image/*">
