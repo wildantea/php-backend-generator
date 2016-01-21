@@ -6,6 +6,7 @@ v1.0.1:
 - remove modul menu
 - add type menu on page add
 
-v1.0.2
+bug fixing
 - fix reset password error
 - add redirect reset password
+- left nav add tampil bound parameter
