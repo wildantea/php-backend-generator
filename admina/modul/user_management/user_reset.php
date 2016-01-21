@@ -1,5 +1,3 @@
-<?php $data_edit=$db->fetch_single_row('sys_users','id',$_SESSION['id_user']);?>
- 
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
@@ -22,7 +20,7 @@
 
                   <div class="box-body">
                   
-                    <form id="pass_up" method="post" class="form-horizontal" action="<?=base_admin();?>modul/user_management/user_management_action.php?act=reset">
+                    <form id="pass_reset" method="post" class="form-horizontal" action="<?=base_admin();?>modul/user_management/user_management_action.php?act=reset">
                       <div class="form-group">
                         <label for="Password Baru" class="control-label col-lg-2">Password Baru</label>
                         <div class="col-lg-10">
@@ -37,6 +35,7 @@
                       </div><!-- /.form-group -->
 
                       <input type="hidden" name="id" value="<?=$data_edit->id?>">
+                      <input type="hidden" id="redirect" value="<?=base_index();?>user-management">
                       <div class="form-group">
                         <label for="tags" class="control-label col-lg-2">&nbsp;</label>
                         <div class="col-lg-10">

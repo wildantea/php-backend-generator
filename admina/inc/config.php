@@ -5,7 +5,7 @@ define( "HOST", "localhost" );
 define( "DATABASE_NAME", "back_end" );
 define( "DB_USERNAME", "root" );
 //password mysql
-define( "DB_PASSWORD", "mypatrick" );
+define( "DB_PASSWORD", "" );
 //dir admin
 define( "DIR_ADMIN", "php-backend-generator/admina/");
 //main directory
