@@ -32,7 +32,7 @@
                         <label for="text1" class="control-label col-lg-2">Icon</label>
                         <div class="col-lg-7">
                           <input type="text" id="text1" value="<?=$data_edit->icon;?>" name="icon" placeholder="fa-camera-retro" class="form-control">
-                        <a target="_blank" href="<?=base_index();?>modul/icon">Referensi Icon (new window)</a>
+                        <a target="_blank" href="<?=base_index();?>page/icon">Referensi Icon (new window)</a>
                         </div>
                       </div><!-- /.form-group -->
                              <div class="form-group">

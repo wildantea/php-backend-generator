@@ -14,7 +14,22 @@ div.dataTables_filter label {
 	width:100%;
 }
 
-
+div.dataTables_processing {
+    position: absolute;
+    color: #ffffff;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 60px;
+    margin-left: -50%;
+    margin-top: -25px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: center;
+    font-size: 1.2em;
+    background-color: white;
+        background: -webkit-gradient(linear, left top, right top, color-stop(0%, rgba(99, 90, 90, 0)), color-stop(25%, rgb(60, 141, 188)), color-stop(75%, rgb(60, 141, 188)), color-stop(100%, rgba(255,255,255,0)));
+}
 
 div.dataTables_info {
 	padding-top: 8px;
